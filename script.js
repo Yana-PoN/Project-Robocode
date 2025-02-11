@@ -19,6 +19,7 @@ function add() {
 
     tr.appendChild(tdName);
     tr.appendChild(tdAmount);
+    
     tr.appendChild(tdButtons);
     tbody.appendChild(tr);
 
