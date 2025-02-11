@@ -1,4 +1,12 @@
+//import { Table } from 'Table';
+
 const tbody = document.getElementById("work");
+
+// var table = new Table(tbody);
+
+// function add() {
+//     this.table.add();
+// }
 
 function add() {
     const tr = document.createElement("tr");
@@ -19,10 +27,12 @@ function add() {
 
     tr.appendChild(tdName);
     tr.appendChild(tdAmount);
-    
+
     tr.appendChild(tdButtons);
     tbody.appendChild(tr);
 
+
+   
     addButtons(tr, tdButtons, inputName, inputAmount, tdName, tdAmount);
 }
 
@@ -34,15 +44,10 @@ function add() {
     saveButton.onclick = function() {
       const name = inputName.value;
       const amount = inputAmount.value;
-
-      const check = document.getElementById("check");
-      check.style.display = "block";  
-
       if (name || amount) {
         tdName.innerHTML = name;
         tdAmount.innerHTML = amount;
-        tdSave.innerHTML = "";
-        saveButton.style.display = "none";
+        saveButton.hidden = true;
       } else {
         alert("Please..");
         return;
