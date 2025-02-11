@@ -1,0 +1,78 @@
+.form-floating {
+    margin: 10px;
+    width: 300px;
+}
+
+.incomeConsumptoin {
+    display: flex;
+    flex-direction: row;
+}
+
+table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(63, 63, 255);
+    color: rgb(255, 255, 255);
+}
+
+td {
+    background-color: #f0f0f0;
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+.form-floating {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.income {
+    text-align: center;
+}
+
+.checkboxAdd {
+    margin: 7px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.add {
+    margin-left: 830px;
+}
+
+.form-check {
+    margin-left: 500px;
+}
+
+.moneyCost {
+    margin-left: 380px;
+}
+
+table {
+    text-align: center;
+}
+
+#check {
+    margin-top: 105px;
+    display: none;
+}
