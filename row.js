@@ -1,79 +1,96 @@
 class Row {
 
-    id;
-    tbody;
-    tr;
+  state = 'Active';
+  name = '';
+  amount = 0;
 
-    inputName;
-    inputAmount;
+  constructor(tableBody) {
+    this.tbody = tableBody;
+    this.createRow();
+  }
 
-    tdName;
-    tdAmount;
+  createRow() {
+    this.tr = document.createElement("tr");
 
-    saveButton;
+    this.tdName = document.createElement("td");
 
-    constructor(tableBody, id) {
-        this.tbody = tableBody;
-        this.id = id;
-        this.createRow();
+    this.tdAmount = document.createElement("td");
+
+    const tdButtons = document.createElement("td");
+
+    this.tr.appendChild(this.tdName);
+    this.tr.appendChild(this.tdAmount);
+    this.tr.appendChild(tdButtons);
+
+    // Create Buttons
+
+    this.saveButton = document.createElement("button");
+    this.saveButton.textContent = "Save";
+    this.saveButton.onclick = this.saveButtonClick.bind(this);
+
+    this.editButton = document.createElement("button");
+    this.editButton.textContent = "Edit";
+    this.editButton.onclick = this.editButtonClick.bind(this);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = this.deleteButtonClick.bind(this)
+
+    this.setInputsState(true);
+
+    tdButtons.appendChild(this.saveButton);
+    tdButtons.appendChild(this.editButton);
+    tdButtons.appendChild(deleteButton);
+    this.tbody.appendChild(this.tr);
+  }
+
+  saveButtonClick() {
+    if (this.inputName.value && this.inputAmount.value) {
+      this.name = this.inputName.value;
+      this.amount = this.inputAmount.value;
+      this.setInputsState(false);
+    } else {
+      alert("Please..");
+      return;
     }
+  }
 
-    createRow()
-    {
-        this.tr = document.createElement("tr");
-    
-        this.tdName = document.createElement("td");
-        this.inputName = document.createElement("input");
-        this.inputName.type = "text";
-        this.inputName.placeholder = "Enter name";
-        this.tdName.appendChild(this.inputName);
-        
-        this.tdAmount = document.createElement("td");
-        this.inputAmount = document.createElement("input");
-        this.inputName.type = "number";
-        this.inputAmount.placeholder = "Enter amount";
-        this.tdAmount.appendChild(this.inputAmount);
-    
-        const tdButtons = document.createElement("td");
-    
-        this.tr.appendChild(this.tdName);
-        this.tr.appendChild(this.tdAmount);
-    
-        this.tr.appendChild(tdButtons);
-        this.tbody.appendChild(this.tr);
+  editButtonClick() {
+    this.setInputsState(true);
+  }
 
-        // Create Buttons
+  deleteButtonClick() {
+    this.tbody.removeChild(this.tr);
+    this.state = 'Deleted';
+    // const check = document.getElementById("check");
+    // check.style.visibility = "hidden";
+  }
 
-        this.saveButton = document.createElement("button");
-        this.saveButton.textContent = "Save";
-        
-        this.saveButton.onclick = this.saveButtonClick;
-    
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-    
-        deleteButton.onclick = this.deleteButtonClick
-    
-        tdButtons.appendChild(this.saveButton);
-        tdButtons.appendChild(deleteButton);
+  setInputsState(isVisible) {
+    if (isVisible) {
+      this.tdName.innerHTML = '';
+      this.tdAmount.innerHTML = '';
+
+      this.inputName = document.createElement("input");
+      this.inputName.type = "text";
+      this.inputName.placeholder = "Enter name";
+      this.inputName.value = this.name;
+      this.tdName.appendChild(this.inputName);
+
+      this.inputAmount = document.createElement("input");
+      this.inputAmount.type = "number";
+      this.inputAmount.placeholder = "Enter amount";
+      this.inputAmount.value = this.amount;
+      this.tdAmount.appendChild(this.inputAmount);
+
+      this.saveButton.hidden = false;
+      this.editButton.hidden = true;
+    } else {
+      this.tdName.innerHTML = this.name;
+      this.tdAmount.innerHTML = this.amount;
+
+      this.saveButton.hidden = true;
+      this.editButton.hidden = false;
     }
-
-    saveButtonClick() {
-        const name = this.inputName.value;
-          const amount = this.inputAmount.value;
-          if (name || amount) {
-            this.tdName.innerHTML = name;
-            this.tdAmount.innerHTML = amount;
-            this.saveButton.hidden = true;
-          } else {
-            alert("Please..");
-            return;
-          }
-    }
-
-    deleteButtonClick() {
-        this.tbody.removeChild(this.tr);
-        const check = document.getElementById("check");
-        check.style.visibility = "hidden";
-    }
+  }
 }

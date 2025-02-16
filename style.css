@@ -1,17 +1,12 @@
-.form-floating {
-    margin: 10px;
-    width: 300px;
-}
-
 .incomeConsumptoin {
     display: flex;
     flex-direction: row;
 }
 
 table {
-    width: 50%;
-    margin: 20px auto;
+    min-width: 550px;
     border-collapse: collapse;
+    text-align: center;
 }
 
 th, td {
@@ -45,34 +40,40 @@ td {
     flex-wrap: wrap;
 }
 
-.income {
-    text-align: center;
-}
-
-.checkboxAdd {
-    margin: 7px;
+.tables {
     display: flex;
     flex-direction: row;
+    gap: 20px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.incomeText {
+    color: blue;
+}
+
+.consumptionText {
+    color: blue;
+}
+
+.checkboxAddText {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.add {
-    margin-left: 830px;
-}
-
-.form-check {
-    margin-left: 500px;
-}
-
-.moneyCost {
-    margin-left: 380px;
-}
-
-table {
+.tableCalculation {
+    display: flex;
+    justify-content: center;
     text-align: center;
+    margin-top: 10px;
 }
 
-#check {
-    margin-top: 105px;
-    display: none;
+.checkboxAdd1 {
+    gap: 175px;
 }
+
+.checkboxAdd {
+    gap: 137px;
+}
+

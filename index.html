@@ -42,24 +42,26 @@
             <button class="btn btn-primary btn-outline-light" type="submit">Search</button>
           </form>
         </div>
-      </div>
+      </div> 
     </nav>
 
-<div class="tableCheckboxAdd">
-  <div class="checkboxAdd">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheck" onclick="checkbox()">
-      <label class="check-label"></label>
-    </div>
-    <div class="add">
-      <button type="button" class="btn btn-primary" onclick="add()" id="add">Add+</button>
-    </div>
-  <div class="moneyCost">
-    <button type="button" class="btn btn-primary">Cost</button>
-    <button type="button" class="btn btn-outline-primary" id="money">0</button>
-  </div>
-</div>
+
+    <div class="tables">
+    <div class="tableBody">
     <div id="income" class="income">
+      <div class="checkboxAddText">
+        <div class="checkboxAdd1 d-flex align-items-center">
+          <div class="form-check1 mb-2">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck1" onclick="checkbox()">
+            <label class="check-label1"></label>
+          </div>
+          <h3 class="incomeText">Income</h3>
+          <div class="add1 p-2">
+            <button type="button" class="btn btn-primary" onclick="add()" id="add1">Add+</button>
+          </div>
+        </div>
+      </div>
+
       <table id="myTable">
           <thead>
               <tr>
@@ -68,22 +70,68 @@
                   <th>##</th>
               </tr>
           </thead>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="check" onclick="check()">
-            <label class="check-label"></label>
-          </div>
           <tbody id="work">
           </tbody>
       </table>
+    </div>
+  </div>
+
+
+
+
+
+<div class="tableBody">
+    <div id="consumption" class="consumption">
+     
+      <div class="tableCheckboxAdd">
+        <div class="checkboxAddText"> 
+        <div class="checkboxAdd d-flex align-items-center">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck5" onclick="checkbox5()">
+            <label class="check-label"></label>
+          </div>
+          <h3 class="consumptionText">Consumption</h3>
+          <div class="add">
+            <button type="button" class="btn btn-primary" onclick="add5()" id="add">Add+</button>
+          </div>
+      </div>
+</div>
+
+      <table id="myTable5">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>##</th>
+              </tr>
+          </thead>
+          <tbody id="work5">
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="button">
     <button type="button" class="btn btn-primary" onclick="calculation()" id="calculation">Calculation</button>
   </div>
-     
-  <script src="table.js"></script>
+     </div>
+
+     <table id="tableCalculation" class="tableCalculation">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>##</th>
+          </tr>
+      </thead>
+      <tbody id="incomeConsumptionCalculation">
+      </tbody>
+    </table>
+  
   <script src="row.js"></script>
+  <script src="table.js"></script>
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
