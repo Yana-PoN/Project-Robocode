@@ -13,8 +13,8 @@ class Table{
     }
 
     getData() {
-      result = [];
-      for (row of this.rows) {
+      let result = [];
+      for (let row of this.rows) {
         if (row.status === "Active") {
           result.push(row);
         }
