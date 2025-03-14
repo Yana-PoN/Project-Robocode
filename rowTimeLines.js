@@ -1,10 +1,11 @@
-class Row {
+class RowTimeLines {
 
-  status = 'Active';
-  name = '';
-  amount = 0;
-  quantity = 0;
-  price = 0;
+    status = 'Active';
+    name = '';
+    numberOfPeriods = 0;
+    weights = [];
+
+    inputWeights = [];
 
   constructor(tableBody, table) {
     this.tbody = tableBody;
@@ -17,19 +18,16 @@ class Row {
 
     this.tdName = document.createElement("td");
 
-    this.tdPrice = document.createElement("td");
+    this.tdNumberOfPeriods = document.createElement("td");
 
-    this.tdQuantity = document.createElement("td");
-
-    this.tdAmount = document.createElement("td");
+    this.tdWeight = document.createElement("td");
 
     const tdButtons = document.createElement("td");
     
 
     this.tr.appendChild(this.tdName);
-    this.tr.appendChild(this.tdPrice);
-    this.tr.appendChild(this.tdQuantity);
-    this.tr.appendChild(this.tdAmount);
+    this.tr.appendChild(this.tdNumberOfPeriods);
+    this.tr.appendChild(this.tdWeight);
     this.tr.appendChild(tdButtons);
 
     this.saveButton = document.createElement("button");
@@ -59,11 +57,16 @@ class Row {
   }
 
   saveButtonClick() {
-    if (this.inputName.value && this.inputPrice.value && this.inputQuantity.value) {
+    if (this.inputName.value && this.inputNumberOfPeriods.value /*&& this.inputWeight.value добавить проверку, что во всех весах есть число */) {
       this.name = this.inputName.value;
-      this.price = +this.inputPrice.value;
-      this.quantity = +this.inputQuantity.value;
-      this.amount = this.price * this.quantity;
+      this.numberOfPeriods = +this.inputNumberOfPeriods.value;
+
+      this.weights = [];
+      this.inputWeights.forEach((v) => {
+        this.weights.push(v.value);
+      });
+
+      //this.weights = +this.inputWeight.value;
       this.setInputsState(false);
       this.table.saveData();
     } else {
@@ -85,16 +88,8 @@ class Row {
   setInputsState(isVisible) {
     if (isVisible) {
       this.tdName.innerHTML = '';
-      this.tdAmount.innerHTML = '---';
-      this.tdPrice.innerHTML = '';
-      this.tdQuantity.innerHTML = '';
-      // this.tdDate.innerHTML = '';
-      
-      // this.inputDate = document.createElement("input");
-      // this.inputDate.type = "date";
-      // this.inputDate.className = "form-control";
-      // this.inputDate.value = this.date;  // Устанавливаем сохранённую дату, если она есть
-      // this.tdDate.appendChild(this.inputDate);
+      this.tdNumberOfPeriods.innerHTML = '';
+      this.tdWeight.innerHTML = '';
 
       this.inputName = document.createElement("input");
       this.inputName.type = "text";
@@ -108,42 +103,37 @@ class Row {
         }
       });
 
+      this.inputNumberOfPeriods = document.createElement("input");
+      this.inputNumberOfPeriods.type = "number";
+      this.inputNumberOfPeriods.placeholder = "Enter number";
+      this.inputNumberOfPeriods.value = this.weights;
+      this.inputNumberOfPeriods.min = 0;
+      this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
 
-      this.inputQuantity = document.createElement("input");
-      this.inputQuantity.type = "number";
-      this.inputQuantity.placeholder = "Enter number";
-      this.inputQuantity.value = this.quantity;
-      this.inputQuantity.min = 0;
-      this.tdQuantity.appendChild(this.inputQuantity);
+      this.inputNumberOfPeriods.onchange = () => {
+      this.tdWeight.innerHTML = ""; // Очищаем перед добавлением новых инпутов
 
-
-      this.inputPrice = document.createElement("input");
-      this.inputPrice.type = "number";
-      this.inputPrice.placeholder = "Enter number";
-      this.inputPrice.value = this.price;
-      this.inputPrice.min = 0;
-      this.tdPrice.appendChild(this.inputPrice);
-
-
-      // this.inputAmount = document.createElement("input");
-      // this.inputAmount.type = "number";
-      // this.inputAmount.placeholder = "Enter amount";
-      // this.inputAmount.value = this.amount;
-      // this.tdAmount.appendChild(this.inputAmount);
+      let count = Number(this.inputNumberOfPeriods.value); // Получаем число из input
+      for (let i = 0; i < count; i++) {
+          let inputWeight = document.createElement("input");
+          inputWeight.type = "number";
+          inputWeight.placeholder = "Enter number";
+          inputWeight.min = 0;
+          this.inputWeights.push(inputWeight);
+          this.tdWeight.appendChild(inputWeight);
+      }
+  };
+      
 
       this.saveButton.hidden = false;
       this.editButton.hidden = true;
     } else {
       this.tdName.innerHTML = this.name;
-      this.tdAmount.innerHTML = this.amount;
-      this.tdPrice.innerHTML = this.price;
-      this.tdQuantity.innerHTML = this.quantity;
-      // this.tdDate.innerHTML = this.date;
+      this.tdNumberOfPeriods.innerHTML = this.numberOfPeriods;
+      this.tdWeight.innerHTML = this.weights;
 
       this.saveButton.hidden = true;
       this.editButton.hidden = false;
     }
   }
 }
-
-

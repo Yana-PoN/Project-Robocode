@@ -29,36 +29,42 @@ class Calculation {
     createText() {
         this.tr = document.createElement("tr");
 
-        let amount = 0;
+        let amountIncome = 0;
 
         for (let i = 0; i < this.income.length; i++) {
-            amount += this.income[i].amount;
+            amountIncome += this.income[i].amount;
         }
         
         
-        let amount2 = 0;
+        let amountConsumption = 0;
 
         for (let i = 0; i < this.consumption.length; i++) {
-            amount2 += this.consumption[i].amount;
+            amountConsumption += this.consumption[i].amount;
         }
 
         const incomeValues = [];
         const consumptionValues = [];
         const resultValues = [];
         const balanceValues = [];
+
         for(let i = 1; i <= this.periodsCount; i++){
-            incomeValues.push(amount);
-            consumptionValues.push(amount2);
-            resultValues.push(amount - amount2);
-            balanceValues.push((amount - amount2) * i);
+            incomeValues.push(amountIncome);
+            consumptionValues.push(amountConsumption);
+            resultValues.push(amountIncome - amountConsumption);
+            balanceValues.push((amountIncome - amountConsumption) * i);
             
         }
         
 
         this.createRow("Income", incomeValues);
         this.createRow("Consumption", consumptionValues);
-        this.createRow("Result", resultValues);
-        this.createRow("Balance", balanceValues);
+
+        const checkComparison = document.getElementById("flexCheckComparison");
+
+        if (checkComparison.checked) {
+            this.createRow("Result", resultValues);
+            this.createRow("Balance", balanceValues);
+        } 
     }
 
     createRow(name, values) {
@@ -77,55 +83,4 @@ class Calculation {
 
         this.tbody.appendChild(tr);
     }
-
-    // amountCalculation() {
-    //     const rows = document.querySelectorAll("#myTable tbody tr");
-        
-    //     let amount = 0;
-    
-    //     for (let i = 0; i < rows.length; i++) {
-    //         const row = rows[i];
-    //         //amount из четвертого столба
-    //         const amount4 = row.cells[3];
-            
-    //         if (amount4) {
-    //             const amountText = amount4.innerText;
-                
-    //             const AmountParseFloat = parseFloat(amountText);
-                
-    //             if (AmountParseFloat >= 0) {
-    //                 amount += AmountParseFloat;
-    //             } else {
-    //                 alert("Бомж");
-    //                 return;
-    //             }
-    //         }
-        
-    //         return amount;
-    //     }
-    // }
-
-    // consumptionCalculation() {
-    //     const rows5 = document.querySelectorAll("#myTable5 tbody tr");
-
-    //     let amount6 = 0;
-        
-    //         for (let i = 0; i < rows5.length; i++) {
-    //             const row5 = rows5[i];
-    //             const amount5 = row5.cells[3];  
-        
-    //             if (amount5) {
-    //                 const amountText = amount5.innerText; 
-    //                 const AmountParseFloat = parseFloat(amountText); 
-        
-    //                 if (AmountParseFloat >= 0) {
-    //                     amount6 += AmountParseFloat;  
-    //                 } else {
-    //                     alert("Pon");
-    //                     return;  
-    //                 }
-    //             }
-    //             return amount6;
-    //         }
-    // }
 }

@@ -1,4 +1,4 @@
-class Table {
+class TableTimeLines {
     
     tbody;
     rows = [];
@@ -9,7 +9,7 @@ class Table {
     }
 
     add() {
-      let row = new Row(this.tbody, this);
+      let row = new RowTimeLines(this.tbody, this);
       this.rows.push(row);
     }
 
@@ -23,23 +23,23 @@ class Table {
         if (store) {
         let data = JSON.parse(store);
         for (let item of data) {
-          let row = new Row(this.tbody, this);
+          let row = new RowTimeLines(this.tbody, this);
           row.name = item.name;
-          row.price = item.price;
-          row.quantity = item.quantity;
-          row.amount = item.amount ;
+          row.numberOfPeriods = item.numberOfPeriods;
+          row.weights = item.weights;
           row.setInputsState(false); 
-          this.rows.push(row);
+          this.rows.push(row);   
       }
     }
   }
+  
 
     getData() {
       let result = [];
       // this.rows.map();
       for (let row of this.rows) {
         if (row.status === "Active") {
-          result.push({name: row.name, price: row.price, quantity: row.quantity, amount: row.amount});
+          result.push({name: row.name, numberOfPeriods: row.numberOfPeriods, weights: row.weights});
         }
       }
 

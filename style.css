@@ -55,14 +55,7 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.checkboxAdd1 {
     gap: 175px;
-}
-
-.checkboxAdd {
-    gap: 137px;
 }
 
 .bi {
@@ -94,6 +87,22 @@ td {
     height: 18px;
 }
 
-.tableCalculation1 {
-    margin-top: 10px;
+.custom-btn {
+    background: none; 
+    border: none; 
+    color: black;
+    font-size: 7px; 
+    cursor: pointer; 
+}
+
+.custom-btn i {
+    color: black; 
+}
+
+.incomeCheck {
+    cursor: pointer;
+}
+
+.consumptionCheck {
+    cursor: pointer;
 }

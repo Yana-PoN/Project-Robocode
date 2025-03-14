@@ -2,85 +2,98 @@
 let totalIncome = 0;
 let totalConsumption = 0;
 
-const tbody = document.getElementById("work");
-const tbody5 = document.getElementById("work5");
+const tbodyInc = document.getElementById("tableRowsInc");
+const tbodyCons = document.getElementById("tableRowsCons");
+const tbody = document.getElementById("tbody");
 
-var table = new Table(tbody);
-var table5 = new Table(tbody5);
+let table = new TableTimeLines('table', tbody); 
+let tableIncome = new Table('income', tbodyInc); 
+let tableConsumption = new Table('consumption' ,tbodyCons);
 
 function add() {
-    this.table.add();
+    table.add();
 }
 
-function add5() {
-    this.table5.add();
+function addIncome() {
+    tableIncome.add();
 }
 
+function addConsumption() {
+    tableConsumption.add();
+}
 
-function checkbox() {
-    const table = document.getElementById("myTable");
-    const checkbox = document.getElementById("flexCheck1");
+function startTable() {
+    tableIncome.fillData();
+    tableConsumption.fillData();
+    table.fillData();
+}
 
-    if (checkbox.checked) {
-        table.style.visibility = "hidden"; 
+startTable();
+
+function checkboxIncome() {
+    const checkIncome = document.getElementById("flexSwitchCheckIncome"); 
+    const disabledCheckIncomeDiv = document.getElementById("flexSwitchCheckIncomeDisabled").parentElement; // Div с отключённым чекбоксом
+    const checkIncomeDiv = checkIncome.parentElement; // Div с основным чекбоксом
+    const tbodyIncome = document.getElementById("tableRowsInc");
+
+    if (checkIncome.checked) {
+        disabledCheckIncomeDiv.className = "form-check form-switch d-none";
+        checkIncomeDiv.className = "form-check form-switch";
     } else {
-        table.style.visibility = "visible"; 
+        checkIncomeDiv.className = "form-check form-switch d-none";
+        disabledCheckIncomeDiv.className = "form-check form-switch";
+        
+
+        localStorage.removeItem("income");
+
+        tableIncome.rows = [];
+
+        tbodyIncome.innerHTML = "";
+
+        tbodyIncome?.parentElement?.removeChild(tbodyIncome);
     }
 }
 
-function checkbox5() {
-    const table = document.getElementById("myTable5");
-    const checkbox = document.getElementById("flexCheck5");
+function checkboxConsumption() {
+    const checkConsumption = document.getElementById("flexSwitchCheckConsumption"); 
+    const disabledCheckConsumptionDiv = document.getElementById("flexSwitchConsumptionDisabled").parentElement; // Div с отключённым чекбоксом
+    const checkConsumptionDiv = checkConsumption.parentElement; // Div с основным чекбоксом
+    const tbodyConsumption = document.getElementById("tableRowsCons");
 
-    if (checkbox.checked) {
-        table.style.visibility = "hidden"; 
+    if (checkConsumption.checked) {
+        disabledCheckConsumptionDiv.className = "form-check form-switch d-none";
+        checkConsumptionDiv.className = "form-check form-switch";
     } else {
-        table.style.visibility = "visible"; 
-    }
-}
+        checkConsumptionDiv.className = "form-check form-switch d-none";
+        disabledCheckConsumptionDiv.className = "form-check form-switch"
 
-function checkbox() {
-    const table = document.getElementById("myTable");
-    const checkbox = document.getElementById("flexCheckChecked1");
+        localStorage.removeItem("consumption");
 
-    if (checkbox.checked) {
-        table.style.visibility = "visible"; 
-    } else {
-        table.style.visibility = "hidden"; 
-    }
-}
+        tableConsumption.rows = [];
 
-function checkbox5() {
-    const table = document.getElementById("myTable5");
-    const checkbox = document.getElementById("flexCheckChecked8");
+        tbodyConsumption.innerHTML = "";
 
-    if (checkbox.checked) {
-        table.style.visibility = "visible"; 
-    } else {
-        table.style.visibility = "hidden"; 
+        tbodyConsumption?.parentElement?.removeChild(tbodyConsumption);
     }
 }
 
 function save() {
     const tableIncome = document.getElementById("tableBody");
-    const checkbox = document.getElementById("flexCheckChecked8");
+    const checkIncome = document.getElementById("flexCheckIncome");
 
-    if (checkbox.checked) {
+    if (checkIncome.checked) {
         tableIncome.style.visibility = "visible"; 
     } else {
         tableIncome.style.visibility = "hidden"; 
     }
 
     const tableConsumption = document.getElementById("tableBody5");
-    const checkbox1 = document.getElementById("flexCheckChecked9");
+    const checkConsumption = document.getElementById("flexCheckConsumption");
 
-    if (checkbox1.checked) {
+    if (checkConsumption.checked) {
         tableConsumption.style.visibility = "visible";
     } else {
         tableConsumption.style.visibility = "hidden";
-        tableIncome.style.display = "flex";
-        tableIncome.style.justifyContent = "center";
-        tableIncome.style.textAlign = "center";
     }
 }
 
@@ -89,11 +102,14 @@ function save() {
 
 function calculation() {
     const theadRow = document.getElementById("calculationHead");
-    // remove children
     theadRow.replaceChildren("");
 
     const tbody = document.getElementById("calculationBody");
-    const p = document.getElementById("numberOfPeriods").value;
-    let calculation = new Calculation(this.table.getData(), this.table5.getData(), p, theadRow, tbody);
+    tbody.replaceChildren("");
+    
+    const numberOfPeriods = document.getElementById("numberOfPeriods").value;
+    let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
     calculation.drawTable();
   }
+
+  
