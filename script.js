@@ -110,6 +110,7 @@ function calculation() {
     const numberOfPeriods = document.getElementById("numberOfPeriods").value;
     let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
     calculation.drawTable();
+    addCanvas();
   }
 
   

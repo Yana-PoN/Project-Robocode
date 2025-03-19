@@ -22,6 +22,8 @@ class Row {
     this.tdQuantity = document.createElement("td");
 
     this.tdAmount = document.createElement("td");
+    
+    this.tdTimeLines = document.createElement("td");
 
     const tdButtons = document.createElement("td");
     
@@ -36,19 +38,16 @@ class Row {
     this.saveButton.className = "custom-btn";
     this.saveButton.innerHTML = `<i class="bi bi-check2"></i>`;
     this.saveButton.onclick = this.saveButtonClick.bind(this);
-    document.body.appendChild(this.saveButton);
 
     this.editButton = document.createElement("button");
     this.editButton.className = "custom-btn";
     this.editButton.innerHTML = `<i class="bi bi-highlighter"></i>`;
     this.editButton.onclick = this.editButtonClick.bind(this);
-    document.body.appendChild(this.editButton);
 
     this.deleteButton = document.createElement("button"); 
     this.deleteButton.className = "custom-btn";
     this.deleteButton.innerHTML = `<i class="bi bi-trash"></i>`;
     this.deleteButton.onclick = this.deleteButtonClick.bind(this);
-    document.body.appendChild(this.deleteButton);
 
     this.setInputsState(true);
 
@@ -64,10 +63,11 @@ class Row {
       this.price = +this.inputPrice.value;
       this.quantity = +this.inputQuantity.value;
       this.amount = this.price * this.quantity;
+
       this.setInputsState(false);
       this.table.saveData();
     } else {
-      alert("Please..");
+      alert("Please fill in all fields");
       return;
     }
   }
@@ -88,13 +88,6 @@ class Row {
       this.tdAmount.innerHTML = '---';
       this.tdPrice.innerHTML = '';
       this.tdQuantity.innerHTML = '';
-      // this.tdDate.innerHTML = '';
-      
-      // this.inputDate = document.createElement("input");
-      // this.inputDate.type = "date";
-      // this.inputDate.className = "form-control";
-      // this.inputDate.value = this.date;  // Устанавливаем сохранённую дату, если она есть
-      // this.tdDate.appendChild(this.inputDate);
 
       this.inputName = document.createElement("input");
       this.inputName.type = "text";
@@ -107,7 +100,6 @@ class Row {
             event.preventDefault(); 
         }
       });
-
 
       this.inputQuantity = document.createElement("input");
       this.inputQuantity.type = "number";
@@ -124,6 +116,64 @@ class Row {
       this.inputPrice.min = 0;
       this.tdPrice.appendChild(this.inputPrice);
 
+      if (!this.tdTimeLines) {
+        this.tdTimeLines = document.createElement("td");
+    } else {
+        this.tdTimeLines.innerHTML = '';
+    }
+
+    // this.buttonTimeLines = document.createElement("button");
+    // this.buttonTimeLines.className = "btn btn-outline-primary";
+    this.buttonTimeLines = document.createElement("button");
+    this.buttonTimeLines.className = "btn btn-outline-primary dropdown-toggle"; // Кнопка с выпадающим меню
+    this.buttonTimeLines.setAttribute("type", "button");
+    this.buttonTimeLines.setAttribute("id", "dropdownMenuButton");
+    this.buttonTimeLines.setAttribute("data-bs-toggle", "dropdown");
+    this.buttonTimeLines.setAttribute("aria-expanded", "false");
+    this.buttonTimeLines.innerText = "Dropdown button";
+    
+    // Создаем выпадающее меню с белым фоном
+    const dropdownMenu = document.createElement("ul");
+    dropdownMenu.className = "dropdown-menu dropdown-menu-light fade"; // Сменили на light
+    dropdownMenu.setAttribute("aria-labelledby", "dropdownMenuButton");
+    
+    // Элементы выпадающего меню
+    const actionItem = document.createElement("li");
+    const actionLink = document.createElement("a");
+    actionLink.className = "dropdown-item";
+    actionLink.href = "#";
+    actionLink.innerText = "Action";
+    actionItem.appendChild(actionLink);
+    
+    const anotherItem = document.createElement("li");
+    const anotherLink = document.createElement("a");
+    anotherLink.className = "dropdown-item";
+    anotherLink.href = "#";
+    anotherLink.innerText = "Another action";
+    anotherItem.appendChild(anotherLink);
+    
+    const elseItem = document.createElement("li");
+    const elseLink = document.createElement("a");
+    elseLink.className = "dropdown-item";
+    elseLink.href = "#";
+    elseLink.innerText = "Something else here";
+    elseItem.appendChild(elseLink);
+    
+    // Добавляем элементы в выпадающее меню
+    dropdownMenu.appendChild(actionItem);
+    dropdownMenu.appendChild(anotherItem);
+    dropdownMenu.appendChild(elseItem);
+    
+    // Добавляем кнопку и меню в нужный контейнер (например, td)
+    this.tdTimeLines.appendChild(this.buttonTimeLines);
+    this.tdTimeLines.appendChild(dropdownMenu);
+    
+
+    this.tdTimeLines.appendChild(this.buttonTimeLines);
+
+    // Вставляем ячейку перед кнопками
+    this.tr.insertBefore(this.tdTimeLines, this.tr.lastChild);
+
 
       // this.inputAmount = document.createElement("input");
       // this.inputAmount.type = "number";
@@ -138,7 +188,6 @@ class Row {
       this.tdAmount.innerHTML = this.amount;
       this.tdPrice.innerHTML = this.price;
       this.tdQuantity.innerHTML = this.quantity;
-      // this.tdDate.innerHTML = this.date;
 
       this.saveButton.hidden = true;
       this.editButton.hidden = false;

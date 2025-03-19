@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" onclick="stopPropagation()">Time lines</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Time lines</button>
 
         <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -93,7 +93,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
                   <div class="p-2">
                     <button type="button" class="btn btn-primary" onclick="add()">Add+</button>
                   </div>
@@ -108,7 +107,6 @@
                     </thead>
                     <tbody id="tbody"></tbody>
                   </table>
-                </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -117,7 +115,7 @@
             </div>
           </div>
         </div>
-        
+      
 
 
 
@@ -144,14 +142,14 @@
       </div>
 
       <table class="shadow p-3 mb-5 bg-body-tertiary rounded">
-          <thead>
+          <thead id="thead">
               <tr>
                   <th>Name</th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Amount</th>
+                  <th>Time Lines</th>
                   <th>##</th>
-                 
               </tr>
           </thead>
           <tbody id="tableRowsInc">
@@ -163,7 +161,7 @@
 
 
 
-<div class="tableBody" id="tableBody5">
+<div class="tableBody">
         <div class="checkboxAddText d-flex align-items-center"> 
 
           <div class="form-check form-switch">
@@ -183,12 +181,13 @@
 </div>
 
       <table class="shadow p-3 mb-5 bg-body-tertiary rounded">
-          <thead>
+          <thead id="thead">
               <tr>
                   <th>Name</th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Amount</th>
+                  <th>Time lines</th>
                   <th>##</th>
               </tr>
           </thead>
@@ -212,8 +211,8 @@
       </tbody>
     </table>
 
-    <div>
-      <canvas id="chart1"></canvas>
+    <div id="canvas-wrapper">
+      <!-- <canvas id="pie"></canvas> -->
     </div>
 
   

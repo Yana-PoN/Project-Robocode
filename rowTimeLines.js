@@ -34,20 +34,18 @@ class RowTimeLines {
     this.saveButton.className = "custom-btn";
     this.saveButton.innerHTML = `<i class="bi bi-check2"></i>`;
     this.saveButton.onclick = this.saveButtonClick.bind(this);
-    document.body.appendChild(this.saveButton);
+
 
     this.editButton = document.createElement("button");
     this.editButton.className = "custom-btn";
     this.editButton.innerHTML = `<i class="bi bi-highlighter"></i>`;
     this.editButton.onclick = this.editButtonClick.bind(this);
-    document.body.appendChild(this.editButton);
 
     this.deleteButton = document.createElement("button"); 
     this.deleteButton.className = "custom-btn";
     this.deleteButton.innerHTML = `<i class="bi bi-trash"></i>`;
     this.deleteButton.onclick = this.deleteButtonClick.bind(this);
-    document.body.appendChild(this.deleteButton);
-
+  
     this.setInputsState(true);
 
     tdButtons.appendChild(this.saveButton);
@@ -57,7 +55,7 @@ class RowTimeLines {
   }
 
   saveButtonClick() {
-    if (this.inputName.value && this.inputNumberOfPeriods.value /*&& this.inputWeight.value добавить проверку, что во всех весах есть число */) {
+    if (this.inputName.value && this.inputNumberOfPeriods.value) {
       this.name = this.inputName.value;
       this.numberOfPeriods = +this.inputNumberOfPeriods.value;
 
@@ -66,7 +64,7 @@ class RowTimeLines {
         this.weights.push(v.value);
       });
 
-      //this.weights = +this.inputWeight.value;
+      
       this.setInputsState(false);
       this.table.saveData();
     } else {
@@ -110,19 +108,37 @@ class RowTimeLines {
       this.inputNumberOfPeriods.min = 0;
       this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
 
-      this.inputNumberOfPeriods.onchange = () => {
-      this.tdWeight.innerHTML = ""; // Очищаем перед добавлением новых инпутов
 
-      let count = Number(this.inputNumberOfPeriods.value); // Получаем число из input
+    this.inputNumberOfPeriods.onchange = () => {
+      this.tdWeight.innerHTML = ""; 
+      this.inputWeights = [];  
+
+      let count = Number(this.inputNumberOfPeriods.value); 
       for (let i = 0; i < count; i++) {
           let inputWeight = document.createElement("input");
           inputWeight.type = "number";
           inputWeight.placeholder = "Enter number";
           inputWeight.min = 0;
+          inputWeight.value = this.weights[i] || ''; // Загружаем сохранённое значение
           this.inputWeights.push(inputWeight);
           this.tdWeight.appendChild(inputWeight);
       }
-  };
+    };
+
+    // ВОССТАНОВЛЕНИЕ ПРИ НАЖАТИИ EDIT (важно!)
+    let count = this.weights.length; // Количество сохранённых весов
+    this.tdWeight.innerHTML = "";
+    this.inputWeights = [];
+    for (let i = 0; i < count; i++) {
+      let inputWeight = document.createElement("input");
+      inputWeight.type = "number";
+      inputWeight.placeholder = "Enter number";
+      inputWeight.min = 0;
+      inputWeight.value = this.weights[i] || ''; // Загружаем сохранённое значение
+      this.inputWeights.push(inputWeight);
+      this.tdWeight.appendChild(inputWeight);
+    }
+
       
 
       this.saveButton.hidden = false;
