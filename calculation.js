@@ -15,7 +15,7 @@ class Calculation {
 
     createHeader() { 
         const name = document.createElement("th");
-        name.innerText = "Name";
+        name.innerText = "Назва";
         this.theadRow.appendChild(name);
 
         for(let i = 1; i <= this.periodsCount; i++) {
@@ -56,14 +56,14 @@ class Calculation {
         }
         
 
-        this.createRow("Income", incomeValues);
-        this.createRow("Consumption", consumptionValues);
+        this.createRow("Дохід", incomeValues);
+        this.createRow("Споживання", consumptionValues);
 
         const checkComparison = document.getElementById("flexCheckComparison");
 
         if (checkComparison.checked) {
-            this.createRow("Result", resultValues);
-            this.createRow("Balance", balanceValues);
+            this.createRow("Результат", resultValues);
+            this.createRow("Баланс", balanceValues);
         } 
     }
 

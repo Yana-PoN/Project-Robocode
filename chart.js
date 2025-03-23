@@ -34,8 +34,59 @@ const config = {
     },
 };
 
-function addCanvas() {
+function getRandomNumber() {
+    return Math.floor(Math.random() * 255);
+}
+
+function getRandomColor() {
+    const red = getRandomNumber();
+    const green = getRandomNumber();
+    const blue = getRandomNumber();
+    const rgbColor = `rgb(${red}, ${green}, ${blue})`
+    return rgbColor;
+}
+
+function createPie(id, labels, amounts) {
+    const canvas = document.createElement("canvas");
+    canvas.id = id;
     canvasWrapper.append(canvas);
-    const pie = document.getElementById("pie");
+    const pie = document.getElementById(id);
+
+    const data = {
+            labels: labels,
+            datasets: [
+            {
+                label: 'Dataset 1',
+                data: amounts,
+                backgroundColor: labels.map(getRandomColor),
+            }
+            ]
+        };
+
+    const config = {
+        type: 'pie',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Pie'
+            }
+          }
+        },
+    };
+
     new Chart(pie, config);
+}
+
+function setLabels(labels) {
+    data.labels = labels;
+}
+
+function setAmount(amounts) {
+    data.datasets[0].data = amounts;
 }

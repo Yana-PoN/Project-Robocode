@@ -56,6 +56,24 @@ class RowTimeLines {
 
   saveButtonClick() {
     if (this.inputName.value && this.inputNumberOfPeriods.value) {
+      if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {        
+        const colDiv = document.createElement("div");
+        colDiv.className = "col-md-6";
+
+        this.inputName.className = "form-control is-invalid";
+        this.inputName.style.borderRadius = "0px";
+        this.inputName.style.width = "180px";
+        this.inputName.style.height = "27px";
+        this.inputName.style.marginLeft = "39px";
+        this.inputName.setAttribute("aria-describedby", "validationServer03Feedback");
+        this.inputName.required = true;
+        colDiv.appendChild(this.inputName);
+
+        this.tdName.appendChild(colDiv);
+
+        return;
+      }
+
       this.name = this.inputName.value;
       this.numberOfPeriods = +this.inputNumberOfPeriods.value;
 
@@ -68,8 +86,22 @@ class RowTimeLines {
       this.setInputsState(false);
       this.table.saveData();
     } else {
-      alert("Please..");
-      return;
+      let alertDiv = document.createElement("div");
+        alertDiv.className = "alert alert-warning alert-dismissible fade show";
+        alertDiv.role = "alert";
+        alertDiv.innerHTML = `<strong>Please</strong> fill in all fields.`;
+    
+        let closeButton = document.createElement("button");
+        closeButton.type = "button";
+        closeButton.className = "btn-close";
+        closeButton.setAttribute("data-bs-dismiss", "alert");
+        closeButton.setAttribute("aria-label", "Close");
+    
+        // Добавляем кнопку в alert
+        alertDiv.appendChild(closeButton);
+    
+        // Добавляем alert в body
+        tbody.appendChild(alertDiv);
     }
   }
 
@@ -90,6 +122,7 @@ class RowTimeLines {
       this.tdWeight.innerHTML = '';
 
       this.inputName = document.createElement("input");
+      this.inputName.className = "form-control";
       this.inputName.type = "text";
       this.inputName.placeholder = "Enter name";
       this.inputName.value = this.name;
@@ -102,44 +135,47 @@ class RowTimeLines {
       });
 
       this.inputNumberOfPeriods = document.createElement("input");
+      this.inputNumberOfPeriods.className = "form-control";
       this.inputNumberOfPeriods.type = "number";
       this.inputNumberOfPeriods.placeholder = "Enter number";
-      this.inputNumberOfPeriods.value = this.weights;
-      this.inputNumberOfPeriods.min = 0;
+      this.inputNumberOfPeriods.value = 1;
+      this.inputNumberOfPeriods.min = 1;
       this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
 
+      
 
-    this.inputNumberOfPeriods.onchange = () => {
-      this.tdWeight.innerHTML = ""; 
-      this.inputWeights = [];  
+      this.inputNumberOfPeriods.onchange = () => {
+        this.tdWeight.innerHTML = ""; 
+        this.inputWeights = [];  
 
-      let count = Number(this.inputNumberOfPeriods.value); 
-      for (let i = 0; i < count; i++) {
+        this.inputWeight = document.createElement("input");
+        this.tdWeight.appendChild(inputWeight);
+
+        let count = Number(this.inputNumberOfPeriods.value); 
+        for (let i = 0; i < count; i++) {
           let inputWeight = document.createElement("input");
+          inputWeight.className = "form-control";
           inputWeight.type = "number";
           inputWeight.placeholder = "Enter number";
           inputWeight.min = 0;
-          inputWeight.value = this.weights[i] || ''; // Загружаем сохранённое значение
+          inputWeight.value = this.weights[i] || '';
           this.inputWeights.push(inputWeight);
           this.tdWeight.appendChild(inputWeight);
+        }
+      };
+
+      let count = this.weights.length;
+      this.tdWeight.innerHTML = "";
+      this.inputWeights = [];
+      for (let i = 0; i < count; i++) {
+        let inputWeight = document.createElement("input");
+        inputWeight.type = "number";
+        inputWeight.placeholder = "Enter number";
+        inputWeight.min = 0;
+        inputWeight.value = this.weights[i] || '';
+        this.inputWeights.push(inputWeight);
+        this.tdWeight.appendChild(inputWeight);
       }
-    };
-
-    // ВОССТАНОВЛЕНИЕ ПРИ НАЖАТИИ EDIT (важно!)
-    let count = this.weights.length; // Количество сохранённых весов
-    this.tdWeight.innerHTML = "";
-    this.inputWeights = [];
-    for (let i = 0; i < count; i++) {
-      let inputWeight = document.createElement("input");
-      inputWeight.type = "number";
-      inputWeight.placeholder = "Enter number";
-      inputWeight.min = 0;
-      inputWeight.value = this.weights[i] || ''; // Загружаем сохранённое значение
-      this.inputWeights.push(inputWeight);
-      this.tdWeight.appendChild(inputWeight);
-    }
-
-      
 
       this.saveButton.hidden = false;
       this.editButton.hidden = true;

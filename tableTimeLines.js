@@ -49,4 +49,14 @@ class TableTimeLines {
     remove() {
       localStorage.setItem(this.name);
     }
+
+    isExistName(name) {
+      for (let row of this.rows) {
+        if (row.name === name) {
+          return true;
+        }
+      }
+
+      return false;
+    }
 }

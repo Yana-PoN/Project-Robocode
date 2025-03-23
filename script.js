@@ -4,11 +4,15 @@ let totalConsumption = 0;
 
 const tbodyInc = document.getElementById("tableRowsInc");
 const tbodyCons = document.getElementById("tableRowsCons");
+const tbodyIncB = document.getElementById("tableRowsIncB");
+const tbodyConsB = document.getElementById("tableRowsConsB");
 const tbody = document.getElementById("tbody");
 
 let table = new TableTimeLines('table', tbody); 
 let tableIncome = new Table('income', tbodyInc); 
 let tableConsumption = new Table('consumption' ,tbodyCons);
+let tableIncomePlanB = new Table('incomePlanB', tbodyIncB); 
+let tableConsumptionPlanB = new Table('consumptionPlanB' ,tbodyConsB);
 
 function add() {
     table.add();
@@ -16,69 +20,98 @@ function add() {
 
 function addIncome() {
     tableIncome.add();
+    const addInc = document.getElementById("addInc");
+    addInc.style.marginLeft = "40px";
+
+    const deleteInc = document.getElementById("deleteInc");
+    deleteInc.style.marginRight = "40px";
 }
 
 function addConsumption() {
     tableConsumption.add();
+    const addCons = document.getElementById("addCons");
+    addCons.style.marginLeft = "40px";
+
+    const deleteCons = document.getElementById("deleteCons");
+    deleteCons.style.marginRight = "40px";
+}
+
+function addIncomeB() {
+    tableIncomePlanB.add();
+    const addIncB = document.getElementById("addIncB");
+    addIncB.style.marginLeft = "80px";
+
+    const deleteIncB = document.getElementById("deleteIncB");
+    deleteIncB.style.marginRight = "80px";
+}
+
+function addConsumptionB() {
+    tableConsumptionPlanB.add();
+    const addConsB = document.getElementById("addConsB");
+    addConsB.style.marginLeft = "80px";
+
+    const deleteConsB = document.getElementById("deleteConsB");
+    deleteConsB.style.marginRight = "80px";
 }
 
 function startTable() {
     tableIncome.fillData();
     tableConsumption.fillData();
+    tableIncomePlanB.fillData();
+    tableConsumptionPlanB.fillData();
     table.fillData();
 }
 
 startTable();
 
-function checkboxIncome() {
-    const checkIncome = document.getElementById("flexSwitchCheckIncome"); 
-    const disabledCheckIncomeDiv = document.getElementById("flexSwitchCheckIncomeDisabled").parentElement; // Div с отключённым чекбоксом
-    const checkIncomeDiv = checkIncome.parentElement; // Div с основным чекбоксом
-    const tbodyIncome = document.getElementById("tableRowsInc");
+function deleteIncome() {
+    let tbodyIncome = document.getElementById("tableRowsInc");
 
-    if (checkIncome.checked) {
-        disabledCheckIncomeDiv.className = "form-check form-switch d-none";
-        checkIncomeDiv.className = "form-check form-switch";
-    } else {
-        checkIncomeDiv.className = "form-check form-switch d-none";
-        disabledCheckIncomeDiv.className = "form-check form-switch";
-        
+    if (tbodyIncome) {
+        tbodyIncome.replaceChildren("");
+    }
 
         localStorage.removeItem("income");
-
-        tableIncome.rows = [];
-
-        tbodyIncome.innerHTML = "";
-
-        tbodyIncome?.parentElement?.removeChild(tbodyIncome);
-    }
+        tbodyIncome.rows = [];
 }
 
-function checkboxConsumption() {
-    const checkConsumption = document.getElementById("flexSwitchCheckConsumption"); 
-    const disabledCheckConsumptionDiv = document.getElementById("flexSwitchConsumptionDisabled").parentElement; // Div с отключённым чекбоксом
-    const checkConsumptionDiv = checkConsumption.parentElement; // Div с основным чекбоксом
-    const tbodyConsumption = document.getElementById("tableRowsCons");
 
-    if (checkConsumption.checked) {
-        disabledCheckConsumptionDiv.className = "form-check form-switch d-none";
-        checkConsumptionDiv.className = "form-check form-switch";
-    } else {
-        checkConsumptionDiv.className = "form-check form-switch d-none";
-        disabledCheckConsumptionDiv.className = "form-check form-switch"
+function deleteConsumption() {
+    let tbodyConsumption = document.getElementById("tableRowsCons");
+
+    if (tbodyConsumption) {
+        tbodyConsumption.replaceChildren("");
+    }
 
         localStorage.removeItem("consumption");
-
         tableConsumption.rows = [];
-
-        tbodyConsumption.innerHTML = "";
-
-        tbodyConsumption?.parentElement?.removeChild(tbodyConsumption);
     }
+
+function deleteIncomeB() {
+    let tbodyIncomeB = document.getElementById("tableRowsIncB");
+
+    if (tbodyIncomeB) {
+        tbodyIncomeB.replaceChildren("");
+    }
+
+        localStorage.removeItem("incomePlanB");
+        tbodyIncomeB.rows = [];
 }
 
+
+function deleteConsumptionB() {
+    let tbodyConsumptionB = document.getElementById("tableRowsConsB");
+
+    if (tbodyConsumptionB) {
+        tbodyConsumptionB.replaceChildren("");
+    }
+
+        localStorage.removeItem("consumptionPlanB");
+        tbodyConsumptionB.rows = [];
+    }
+
 function save() {
-    const tableIncome = document.getElementById("tableBody");
+    const tableIncome = document.getElementById("tableIncomeBody");
     const checkIncome = document.getElementById("flexCheckIncome");
 
     if (checkIncome.checked) {
@@ -87,15 +120,36 @@ function save() {
         tableIncome.style.visibility = "hidden"; 
     }
 
-    const tableConsumption = document.getElementById("tableBody5");
+    const tableConsumption = document.getElementById("tableConsumptionBody");
     const checkConsumption = document.getElementById("flexCheckConsumption");
 
     if (checkConsumption.checked) {
         tableConsumption.style.visibility = "visible";
     } else {
         tableConsumption.style.visibility = "hidden";
+    } 
+
+    const flexCheckComparison = document.getElementById("flexCheckComparison");
+    const planB = document.getElementById("planB");
+
+    if (flexCheckComparison.checked) {
+        planB.hidden = false;
+    } else {
+        planB.hidden = true;
     }
 }
+
+const CheckQuantity = document.getElementById("flexCheckQuantity");
+const deposit = document.getElementById("deposit");
+
+
+CheckQuantity.addEventListener("change", function () {
+    if (CheckQuantity.checked) {
+        deposit.style.visibility = "visible"; 
+    } else {
+        deposit.style.visibility = "hidden"; 
+    }
+});
 
 
 
@@ -110,7 +164,23 @@ function calculation() {
     const numberOfPeriods = document.getElementById("numberOfPeriods").value;
     let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
     calculation.drawTable();
-    addCanvas();
-  }
 
-  
+    const incomeLabels = tableIncome.getData().map(function(item) {
+        return item.name;
+    })
+
+    const incomeAmounts = tableIncome.getData().map(function(item) {
+        return item.amount;
+    })
+
+    const consumptionLabels = tableConsumption.getData().map(function(item) {
+        return item.name;
+    })
+
+    const consumptionAmounts = tableConsumption.getData().map(function(item) {
+        return item.amount;
+    })
+
+    createPie("incomePie", incomeLabels, incomeAmounts);
+    createPie("consumptionPie", consumptionLabels, consumptionAmounts);
+  }

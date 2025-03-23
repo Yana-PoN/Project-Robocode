@@ -69,18 +69,6 @@ td {
     margin-right: 10px;
 }
 
-.h6Input {
-    display: flex;
-    flex-direction: row;
-}
-
-.inputQuantity {
-    font-size: 10px;
-    margin-left: 15px;
-    height: 18px;
-    margin-top: 4px;
-}
-
 .numberOfPeriods {
     font-size: 10px;
     margin-left: 15px;
@@ -105,4 +93,39 @@ td {
 
 .consumptionCheck {
     cursor: pointer;
+}
+
+.modal-lg {
+    max-width: 90%;
+}
+
+.canvas-wrapper {
+    width: 900px;
+    height: 900px;
+    display: flex;
+    flex-direction: row;
+}
+
+.table3 {
+    margin-top: 5px;
+}
+
+.deleteCopy {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.plan {
+    color: blue;
+    text-align: center;
+    cursor: pointer;
+}
+
+.plans {
+    text-decoration: none;
+}
+
+.PlanB {
+    display: none;
 }

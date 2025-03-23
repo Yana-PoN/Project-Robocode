@@ -5,6 +5,7 @@ class Row {
   amount = 0;
   quantity = 0;
   price = 0;
+  timeLineName = '';
 
   constructor(tableBody, table) {
     this.tbody = tableBody;
@@ -26,12 +27,12 @@ class Row {
     this.tdTimeLines = document.createElement("td");
 
     const tdButtons = document.createElement("td");
-    
 
     this.tr.appendChild(this.tdName);
     this.tr.appendChild(this.tdPrice);
     this.tr.appendChild(this.tdQuantity);
     this.tr.appendChild(this.tdAmount);
+    this.tr.appendChild(this.tdTimeLines);
     this.tr.appendChild(tdButtons);
 
     this.saveButton = document.createElement("button");
@@ -57,18 +58,67 @@ class Row {
     this.tbody.appendChild(this.tr);
   }
 
+  tablesMargin() {
+    const addInc = document.getElementById("addInc");
+    addInc.style.marginLeft = "0px";
+    const deleteInc = document.getElementById("deleteInc");
+    deleteInc.style.marginRight = "0px";
+
+    const addCons = document.getElementById("addCons");
+    addCons.style.marginLeft = "0px";
+    const deleteCons = document.getElementById("deleteCons");
+    deleteCons.style.marginRight = "0px";
+
+    const addIncB = document.getElementById("addIncB");
+    addIncB.style.marginLeft = "0px";
+    const deleteIncB = document.getElementById("deleteIncB");
+    deleteIncB.style.marginRight = "0px";
+
+    const addConsB = document.getElementById("addConsB");
+    addConsB.style.marginLeft = "0px";
+    const deleteConsB = document.getElementById("deleteConsB");
+    deleteConsB.style.marginRight = "0px";
+  }
+
   saveButtonClick() {
-    if (this.inputName.value && this.inputPrice.value && this.inputQuantity.value) {
+    if (this.inputName.value.trim() && this.inputPrice.value && this.inputQuantity.value) {
+
+      this.tablesMargin();
+      
       this.name = this.inputName.value;
       this.price = +this.inputPrice.value;
       this.quantity = +this.inputQuantity.value;
       this.amount = this.price * this.quantity;
+      this.timeLineName = this.timeLineSelect.value;
 
       this.setInputsState(false);
       this.table.saveData();
+
     } else {
-      alert("Please fill in all fields");
-      return;
+
+      if (this.inputName.value.trim() === "") {
+        this.setError(this.inputName, this.tdName);
+      } 
+    
+      if (this.inputPrice.value === "") {
+        this.setError(this.inputPrice, this.tdPrice);
+      } 
+    
+      if (this.inputQuantity.value === "") {
+        this.setError(this.inputQuantity, this.tdQuantity);
+      } 
+  }
+}
+
+  setError(input, td) {
+    input.className = "form-control is-invalid";
+    input.required = true;
+  }
+
+  removeError(input, td) {
+    if (td.children[0].children.length > 0){
+      td.innerHTML = '';
+      td.appendChild(input);
     }
   }
 
@@ -77,8 +127,11 @@ class Row {
   }
 
   deleteButtonClick() {
-    this.tbody.removeChild(this.tr);
+    this.tbody.removeChild(this.tr);  
     this.status = 'Deleted';
+
+    this.tablesMargin();
+
     this.table.saveData();
   }
 
@@ -88,92 +141,43 @@ class Row {
       this.tdAmount.innerHTML = '---';
       this.tdPrice.innerHTML = '';
       this.tdQuantity.innerHTML = '';
+      this.tdTimeLines.innerHTML = '';
 
       this.inputName = document.createElement("input");
+      this.inputName.className = "form-control";
       this.inputName.type = "text";
       this.inputName.placeholder = "Enter name";
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
 
       this.inputName.addEventListener("keydown", function(event) {
-        if (event.key === " ") {
-            event.preventDefault(); 
-        }
+        event.currentTarget.className = "form-control";
       });
 
       this.inputQuantity = document.createElement("input");
+      this.inputQuantity.className = "form-control";
       this.inputQuantity.type = "number";
       this.inputQuantity.placeholder = "Enter number";
       this.inputQuantity.value = this.quantity;
       this.inputQuantity.min = 0;
       this.tdQuantity.appendChild(this.inputQuantity);
 
-
       this.inputPrice = document.createElement("input");
+      this.inputPrice.className = "form-control";
       this.inputPrice.type = "number";
       this.inputPrice.placeholder = "Enter number";
       this.inputPrice.value = this.price;
       this.inputPrice.min = 0;
       this.tdPrice.appendChild(this.inputPrice);
 
-      if (!this.tdTimeLines) {
-        this.tdTimeLines = document.createElement("td");
-    } else {
-        this.tdTimeLines.innerHTML = '';
-    }
+      this.timeLineSelect = this.getTimeLineComboBox();
+      this.tdTimeLines.appendChild(this.timeLineSelect);
 
-    // this.buttonTimeLines = document.createElement("button");
-    // this.buttonTimeLines.className = "btn btn-outline-primary";
-    this.buttonTimeLines = document.createElement("button");
-    this.buttonTimeLines.className = "btn btn-outline-primary dropdown-toggle"; // Кнопка с выпадающим меню
-    this.buttonTimeLines.setAttribute("type", "button");
-    this.buttonTimeLines.setAttribute("id", "dropdownMenuButton");
-    this.buttonTimeLines.setAttribute("data-bs-toggle", "dropdown");
-    this.buttonTimeLines.setAttribute("aria-expanded", "false");
-    this.buttonTimeLines.innerText = "Dropdown button";
-    
-    // Создаем выпадающее меню с белым фоном
-    const dropdownMenu = document.createElement("ul");
-    dropdownMenu.className = "dropdown-menu dropdown-menu-light fade"; // Сменили на light
-    dropdownMenu.setAttribute("aria-labelledby", "dropdownMenuButton");
-    
-    // Элементы выпадающего меню
-    const actionItem = document.createElement("li");
-    const actionLink = document.createElement("a");
-    actionLink.className = "dropdown-item";
-    actionLink.href = "#";
-    actionLink.innerText = "Action";
-    actionItem.appendChild(actionLink);
-    
-    const anotherItem = document.createElement("li");
-    const anotherLink = document.createElement("a");
-    anotherLink.className = "dropdown-item";
-    anotherLink.href = "#";
-    anotherLink.innerText = "Another action";
-    anotherItem.appendChild(anotherLink);
-    
-    const elseItem = document.createElement("li");
-    const elseLink = document.createElement("a");
-    elseLink.className = "dropdown-item";
-    elseLink.href = "#";
-    elseLink.innerText = "Something else here";
-    elseItem.appendChild(elseLink);
-    
-    // Добавляем элементы в выпадающее меню
-    dropdownMenu.appendChild(actionItem);
-    dropdownMenu.appendChild(anotherItem);
-    dropdownMenu.appendChild(elseItem);
-    
-    // Добавляем кнопку и меню в нужный контейнер (например, td)
-    this.tdTimeLines.appendChild(this.buttonTimeLines);
-    this.tdTimeLines.appendChild(dropdownMenu);
-    
-
-    this.tdTimeLines.appendChild(this.buttonTimeLines);
-
-    // Вставляем ячейку перед кнопками
-    this.tr.insertBefore(this.tdTimeLines, this.tr.lastChild);
-
+      this.inputName.style.width = "100px";
+      this.inputPrice.style.width = "100px";
+      this.inputQuantity.style.width = "100px";
+      this.timeLineSelect.style.width = "180px";
+      this.timeLineSelect.style.textAlign = "center";
 
       // this.inputAmount = document.createElement("input");
       // this.inputAmount.type = "number";
@@ -188,11 +192,76 @@ class Row {
       this.tdAmount.innerHTML = this.amount;
       this.tdPrice.innerHTML = this.price;
       this.tdQuantity.innerHTML = this.quantity;
+      this.tdTimeLines.innerHTML = this.timeLineName;
 
       this.saveButton.hidden = true;
       this.editButton.hidden = false;
     }
   }
+
+  // getTimeLineComboBox() {
+  //   let select = document.createElement('select');
+  //   let option = document.createElement('option');
+  //   option.value = 'None';
+  //   option.innerText = 'None';
+  //   option.style.width = "180px";
+  //   select.appendChild(option);
+
+  //   let store = localStorage.getItem('table');
+  //   if (store) {
+  //     let data = JSON.parse(store);
+  //     for (let item of data) {
+  //       option = document.createElement('option');
+  //       option.value = item.name;
+  //       option.innerText = item.name;
+
+  //       if (item.name === this.timeLineName) {
+  //         option.selected = true;
+  //       }
+
+  //       select.appendChild(option);
+  //     }
+  //   }
+  //   return select;
+  // }
+  getTimeLineComboBox() {
+    let select = document.createElement('select');
+    select.classList.add('timeline-select'); 
+
+    let defaultOption = document.createElement('option');
+    defaultOption.value = 'None';
+    defaultOption.innerText = 'None';
+    defaultOption.style.fontWeight = 'bold';
+    select.appendChild(defaultOption);
+
+    let store = localStorage.getItem('table');
+    if (store) {
+        let data = JSON.parse(store);
+        data.forEach(item => {
+            let option = document.createElement('option');
+            option.value = item.name;
+            option.innerText = item.name;
+            option.style.padding = '5px';
+
+            if (item.name === this.timeLineName) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+        });
+    }
+
+    
+    select.style.width = '200px';
+    select.style.padding = '8px';
+    select.style.borderRadius = '6px';
+    select.style.border = '1px solid #ccc';
+    select.style.backgroundColor = '#fff';
+    select.style.cursor = 'pointer';
+
+    return select;
+}
+
 }
 
 
