@@ -64,6 +64,9 @@ function startTable() {
 
 startTable();
 
+const spinner = document.getElementById("spinner");
+spinner.hidden = true;
+
 function deleteIncome() {
     let tbodyIncome = document.getElementById("tableRowsInc");
 
@@ -155,32 +158,40 @@ CheckQuantity.addEventListener("change", function () {
 
 
 function calculation() {
-    const theadRow = document.getElementById("calculationHead");
-    theadRow.replaceChildren("");
+    const spinner = document.getElementById("spinner");
+    spinner.hidden = false;
 
-    const tbody = document.getElementById("calculationBody");
-    tbody.replaceChildren("");
-    
-    const numberOfPeriods = document.getElementById("numberOfPeriods").value;
-    let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
-    calculation.drawTable();
+    setTimeout(() => {
 
-    const incomeLabels = tableIncome.getData().map(function(item) {
-        return item.name;
-    })
+        spinner.hidden = true;
 
-    const incomeAmounts = tableIncome.getData().map(function(item) {
-        return item.amount;
-    })
+        const theadRow = document.getElementById("calculationHead");
+        theadRow.replaceChildren("");
 
-    const consumptionLabels = tableConsumption.getData().map(function(item) {
-        return item.name;
-    })
+        const tbody = document.getElementById("calculationBody");
+        tbody.replaceChildren("");
+        
+        const numberOfPeriods = document.getElementById("numberOfPeriods").value;
+        let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
+        calculation.drawTable();
 
-    const consumptionAmounts = tableConsumption.getData().map(function(item) {
-        return item.amount;
-    })
+        const incomeLabels = tableIncome.getData().map(function(item) {
+            return item.name;
+        });
 
-    createPie("incomePie", incomeLabels, incomeAmounts);
-    createPie("consumptionPie", consumptionLabels, consumptionAmounts);
+        const incomeAmounts = tableIncome.getData().map(function(item) {
+            return item.amount;
+        });
+
+        const consumptionLabels = tableConsumption.getData().map(function(item) {
+            return item.name;
+        });
+
+        const consumptionAmounts = tableConsumption.getData().map(function(item) {
+            return item.amount;
+        });
+
+        createPie("incomePie", incomeLabels, incomeAmounts);
+        createPie("consumptionPie", consumptionLabels, consumptionAmounts);
+    }, 1000); // 1000 миллисекунд = 1 секунда
   }
