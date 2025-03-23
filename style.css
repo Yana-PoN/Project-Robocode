@@ -130,8 +130,16 @@ td {
     display: none;
 }
 
+.spinner {
+    font-size: 50px; 
+    font-weight: bold;
+    color: green;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
 

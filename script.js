@@ -159,18 +159,25 @@ CheckQuantity.addEventListener("change", function () {
 
 function calculation() {
     const spinner = document.getElementById("spinner");
-    spinner.hidden = false;
+    const theadRow = document.getElementById("calculationHead");
+    const tbody = document.getElementById("calculationBody");
+
+    if (this.pieIncome) {
+        this.pieIncome.style.display = 'none';
+    }
+
+    if (this.pieConsumption) {
+        this.pieConsumption.style.display = 'none';
+    }
+
+    spinner.hidden = false; 
+    theadRow.replaceChildren("");
+    tbody.replaceChildren("");
 
     setTimeout(() => {
+        spinner.hidden = true; 
 
-        spinner.hidden = true;
-
-        const theadRow = document.getElementById("calculationHead");
-        theadRow.replaceChildren("");
-
-        const tbody = document.getElementById("calculationBody");
-        tbody.replaceChildren("");
-        
+       
         const numberOfPeriods = document.getElementById("numberOfPeriods").value;
         let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
         calculation.drawTable();
@@ -191,7 +198,17 @@ function calculation() {
             return item.amount;
         });
 
-        createPie("incomePie", incomeLabels, incomeAmounts);
-        createPie("consumptionPie", consumptionLabels, consumptionAmounts);
-    }, 1000); // 1000 миллисекунд = 1 секунда
-  }
+        if (this.pieIncome) {
+            this.pieIncome.style.display = "block";
+        }
+
+        if (this.pieConsumption) {
+            this.pieConsumption.style.display = "block";
+        }
+
+        this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
+        this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Розхід");
+    }, 1000); // 3000 миллисекунд = 3 секунды
+}
+
+

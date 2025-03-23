@@ -46,7 +46,7 @@ function getRandomColor() {
     return rgbColor;
 }
 
-function createPie(id, labels, amounts) {
+function createPie(id, labels, amounts, title) {
     const canvas = document.createElement("canvas");
     canvas.id = id;
     canvasWrapper.append(canvas);
@@ -74,13 +74,14 @@ function createPie(id, labels, amounts) {
             },
             title: {
               display: true,
-              text: 'Pie'
+              text: title
             }
           }
         },
     };
 
     new Chart(pie, config);
+    return canvas;
 }
 
 function setLabels(labels) {
