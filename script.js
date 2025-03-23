@@ -9,17 +9,17 @@ const tbodyConsB = document.getElementById("tableRowsConsB");
 const tbody = document.getElementById("tbody");
 
 let table = new TableTimeLines('table', tbody); 
-let tableIncome = new Table('income', tbodyInc); 
-let tableConsumption = new Table('consumption' ,tbodyCons);
-let tableIncomePlanB = new Table('incomePlanB', tbodyIncB); 
-let tableConsumptionPlanB = new Table('consumptionPlanB' ,tbodyConsB);
+let tableIncomeA = new Table('income', tbodyInc); 
+let tableConsumptionA = new Table('consumption' ,tbodyCons);
+let tableIncomeB = new Table('incomePlanB', tbodyIncB); 
+let tableConsumptionB = new Table('consumptionPlanB' ,tbodyConsB);
 
 function add() {
     table.add();
 }
 
 function addIncome() {
-    tableIncome.add();
+    tableIncomeA.add();
     const addInc = document.getElementById("addInc");
     addInc.style.marginLeft = "40px";
 
@@ -28,7 +28,7 @@ function addIncome() {
 }
 
 function addConsumption() {
-    tableConsumption.add();
+    tableConsumptionA.add();
     const addCons = document.getElementById("addCons");
     addCons.style.marginLeft = "40px";
 
@@ -37,7 +37,7 @@ function addConsumption() {
 }
 
 function addIncomeB() {
-    tableIncomePlanB.add();
+    tableIncomeB.add();
     const addIncB = document.getElementById("addIncB");
     addIncB.style.marginLeft = "80px";
 
@@ -46,7 +46,7 @@ function addIncomeB() {
 }
 
 function addConsumptionB() {
-    tableConsumptionPlanB.add();
+    tableConsumptionB.add();
     const addConsB = document.getElementById("addConsB");
     addConsB.style.marginLeft = "80px";
 
@@ -55,10 +55,10 @@ function addConsumptionB() {
 }
 
 function startTable() {
-    tableIncome.fillData();
-    tableConsumption.fillData();
-    tableIncomePlanB.fillData();
-    tableConsumptionPlanB.fillData();
+    tableIncomeA.fillData();
+    tableConsumptionA.fillData();
+    tableIncomeB.fillData();
+    tableConsumptionB.fillData();
     table.fillData();
 }
 
@@ -87,7 +87,7 @@ function deleteConsumption() {
     }
 
         localStorage.removeItem("consumption");
-        tableConsumption.rows = [];
+        tableConsumptionA.rows = [];
     }
 
 function deleteIncomeB() {
@@ -98,7 +98,7 @@ function deleteIncomeB() {
     }
 
         localStorage.removeItem("incomePlanB");
-        tableIncomePlanB.rows = [];
+        tableIncomeB.rows = [];
 }
 
 
@@ -177,24 +177,37 @@ function calculation() {
     setTimeout(() => {
         spinner.hidden = true; 
 
-       
-        const numberOfPeriods = document.getElementById("numberOfPeriods").value;
-        let calculation = new Calculation(tableIncome.getData(), tableConsumption.getData(), numberOfPeriods, theadRow, tbody);
+      let store = localStorage.getItem('table');
+      let timeLines = null;
+      if (store) {
+        timeLines = JSON.parse(store);
+      }
+
+      const numberOfPeriods = document.getElementById("numberOfPeriods").value;
+      let calculation = new Calculation(
+        tableIncomeA.getData(),
+        tableConsumptionA.getData(),
+        tableIncomeB.getData(),
+        tableConsumptionB.getData(),
+        numberOfPeriods, null,
+        timeLines,
+        theadRow,
+        tbody);
         calculation.drawTable();
 
-        const incomeLabels = tableIncome.getData().map(function(item) {
+        const incomeLabels = tableIncomeA.getData().map(function(item) {
             return item.name;
         });
 
-        const incomeAmounts = tableIncome.getData().map(function(item) {
+        const incomeAmounts = tableIncomeA.getData().map(function(item) {
             return item.amount;
         });
 
-        const consumptionLabels = tableConsumption.getData().map(function(item) {
+        const consumptionLabels = tableConsumptionA.getData().map(function(item) {
             return item.name;
         });
 
-        const consumptionAmounts = tableConsumption.getData().map(function(item) {
+        const consumptionAmounts = tableConsumptionA.getData().map(function(item) {
             return item.amount;
         });
 
@@ -208,7 +221,7 @@ function calculation() {
 
         this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
         this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Розхід");
-    }, 1000); // 3000 миллисекунд = 3 секунды
+    }, 100);
 }
 
 

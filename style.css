@@ -143,3 +143,12 @@ td {
     100% { transform: rotate(360deg); }
 }
 
+.calcGroup {
+  text-align: left;
+  padding-left: 30px;
+}
+
+.calcItem {
+  text-align: left;
+  padding-left: 50px;
+}

@@ -1,62 +1,61 @@
 class TableTimeLines {
-    
-    tbody;
-    rows = [];
 
-    constructor(name, tableBody) {
-      this.name = name;
-      this.tbody = tableBody;
-    }
+  tbody;
+  rows = [];
 
-    add() {
-      let row = new RowTimeLines(this.tbody, this);
-      this.rows.push(row);
-    }
+  constructor(name, tableBody) {
+    this.name = name;
+    this.tbody = tableBody;
+  }
 
-     saveData() {
-        localStorage.setItem(this.name, JSON.stringify(this.getData()));
-    }
+  add() {
+    let row = new RowTimeLines(this.tbody, this);
+    this.rows.push(row);
+  }
 
-    fillData() {
-        let store = localStorage.getItem(this.name);
-        console.log(store);
-        if (store) {
-        let data = JSON.parse(store);
-        for (let item of data) {
-          let row = new RowTimeLines(this.tbody, this);
-          row.name = item.name;
-          row.numberOfPeriods = item.numberOfPeriods;
-          row.weights = item.weights;
-          row.setInputsState(false); 
-          this.rows.push(row);   
+  saveData() {
+    localStorage.setItem(this.name, JSON.stringify(this.getData()));
+  }
+
+  fillData() {
+    let store = localStorage.getItem(this.name);
+    console.log(store);
+    if (store) {
+      let data = JSON.parse(store);
+      for (let item of data) {
+        let row = new RowTimeLines(this.tbody, this);
+        row.name = item.name;
+        row.numberOfPeriods = item.numberOfPeriods;
+        row.weights = item.weights;
+        row.setInputsState(false);
+        this.rows.push(row);
       }
     }
   }
-  
 
-    getData() {
-      let result = [];
-      // this.rows.map();
-      for (let row of this.rows) {
-        if (row.status === "Active") {
-          result.push({name: row.name, numberOfPeriods: row.numberOfPeriods, weights: row.weights});
-        }
+
+  getData() {
+    let result = [];
+    for (let row of this.rows) {
+      if (row.status === "Active") {
+        result.push({ name: row.name, numberOfPeriods: row.numberOfPeriods, weights: row.weights });
       }
-
-      return result;
     }
 
-    remove() {
-      localStorage.setItem(this.name);
-    }
+    return result;
+  }
 
-    isExistName(name) {
-      for (let row of this.rows) {
-        if (row.name === name) {
-          return true;
-        }
+  remove() {
+    localStorage.setItem(this.name);
+  }
+
+  isExistName(name) {
+    for (let row of this.rows) {
+      if (row.name === name) {
+        return true;
       }
-
-      return false;
     }
+
+    return false;
+  }
 }

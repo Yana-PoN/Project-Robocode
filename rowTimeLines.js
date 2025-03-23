@@ -1,11 +1,11 @@
 class RowTimeLines {
 
-    status = 'Active';
-    name = '';
-    numberOfPeriods = 0;
-    weights = [];
+  status = 'Active';
+  name = '';
+  numberOfPeriods = 1;
+  weights = [1];
 
-    inputWeights = [];
+  inputWeights = [];
 
   constructor(tableBody, table) {
     this.tbody = tableBody;
@@ -23,7 +23,7 @@ class RowTimeLines {
     this.tdWeight = document.createElement("td");
 
     const tdButtons = document.createElement("td");
-    
+
 
     this.tr.appendChild(this.tdName);
     this.tr.appendChild(this.tdNumberOfPeriods);
@@ -41,11 +41,11 @@ class RowTimeLines {
     this.editButton.innerHTML = `<i class="bi bi-highlighter"></i>`;
     this.editButton.onclick = this.editButtonClick.bind(this);
 
-    this.deleteButton = document.createElement("button"); 
+    this.deleteButton = document.createElement("button");
     this.deleteButton.className = "custom-btn";
     this.deleteButton.innerHTML = `<i class="bi bi-trash"></i>`;
     this.deleteButton.onclick = this.deleteButtonClick.bind(this);
-  
+
     this.setInputsState(true);
 
     tdButtons.appendChild(this.saveButton);
@@ -56,7 +56,7 @@ class RowTimeLines {
 
   saveButtonClick() {
     if (this.inputName.value && this.inputNumberOfPeriods.value) {
-      if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {        
+      if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {
         const colDiv = document.createElement("div");
         colDiv.className = "col-md-6";
 
@@ -82,26 +82,24 @@ class RowTimeLines {
         this.weights.push(v.value);
       });
 
-      
+
       this.setInputsState(false);
       this.table.saveData();
     } else {
       let alertDiv = document.createElement("div");
-        alertDiv.className = "alert alert-warning alert-dismissible fade show";
-        alertDiv.role = "alert";
-        alertDiv.innerHTML = `<strong>Please</strong> fill in all fields.`;
-    
-        let closeButton = document.createElement("button");
-        closeButton.type = "button";
-        closeButton.className = "btn-close";
-        closeButton.setAttribute("data-bs-dismiss", "alert");
-        closeButton.setAttribute("aria-label", "Close");
-    
-        // Добавляем кнопку в alert
-        alertDiv.appendChild(closeButton);
-    
-        // Добавляем alert в body
-        tbody.appendChild(alertDiv);
+      alertDiv.className = "alert alert-warning alert-dismissible fade show";
+      alertDiv.role = "alert";
+      alertDiv.innerHTML = `<strong>Please</strong> fill in all fields.`;
+
+      let closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.className = "btn-close";
+      closeButton.setAttribute("data-bs-dismiss", "alert");
+      closeButton.setAttribute("aria-label", "Close");
+
+      alertDiv.appendChild(closeButton);
+
+      tbody.appendChild(alertDiv);
     }
   }
 
@@ -128,9 +126,9 @@ class RowTimeLines {
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
 
-      this.inputName.addEventListener("keydown", function(event) {
+      this.inputName.addEventListener("keydown", function (event) {
         if (event.key === " ") {
-            event.preventDefault(); 
+          event.preventDefault();
         }
       });
 
@@ -138,20 +136,15 @@ class RowTimeLines {
       this.inputNumberOfPeriods.className = "form-control";
       this.inputNumberOfPeriods.type = "number";
       this.inputNumberOfPeriods.placeholder = "Enter number";
-      this.inputNumberOfPeriods.value = 1;
+      this.inputNumberOfPeriods.value = this.numberOfPeriods;
       this.inputNumberOfPeriods.min = 1;
       this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
 
-      
-
       this.inputNumberOfPeriods.onchange = () => {
-        this.tdWeight.innerHTML = ""; 
-        this.inputWeights = [];  
+        this.tdWeight.innerHTML = "";
+        this.inputWeights = [];
 
-        this.inputWeight = document.createElement("input");
-        this.tdWeight.appendChild(inputWeight);
-
-        let count = Number(this.inputNumberOfPeriods.value); 
+        let count = Number(this.inputNumberOfPeriods.value);
         for (let i = 0; i < count; i++) {
           let inputWeight = document.createElement("input");
           inputWeight.className = "form-control";
