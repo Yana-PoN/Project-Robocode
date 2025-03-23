@@ -95,7 +95,7 @@ function deleteIncomeB() {
     }
 
         localStorage.removeItem("incomePlanB");
-        tbodyIncomeB.rows = [];
+        tableIncomePlanB.rows = [];
 }
 
 
