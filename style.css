@@ -38,7 +38,6 @@ td {
 .tables {
     display: flex;
     flex-direction: row;
-    gap: 20px;
     justify-content: space-around;
     flex-wrap: wrap;
 }
@@ -107,7 +106,7 @@ td {
 }
 
 .table3 {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .deleteCopy {
@@ -143,12 +142,29 @@ td {
     100% { transform: rotate(360deg); }
 }
 
-.calcGroup {
-  text-align: left;
-  padding-left: 30px;
-}
-
-.calcItem {
-  text-align: left;
-  padding-left: 50px;
-}
+.calcPlan {
+    text-align: center;
+    font-size: 150%;
+  }
+  
+  .calcGroup {
+    text-align: left;
+    font-size: 110%;
+    padding-left: 30px;
+    font-weight: bold;
+  }
+  
+  .calcResult {
+    text-align: left;
+    padding-left: 40px;
+    color: blue;
+  }
+  
+  .calcPlanResult {
+    font-weight: bold;
+  }
+  
+  .calcItem {
+    text-align: left;
+    padding-left: 50px;
+  }

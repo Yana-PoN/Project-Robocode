@@ -6,6 +6,7 @@ class Row {
   quantity = 0;
   price = 0;
   timeLineName = '';
+  amountCheckbox = 0;
 
   constructor(tableBody, table) {
     this.tbody = tableBody;
@@ -81,15 +82,26 @@ class Row {
   }
 
   saveButtonClick() {
-    if (this.inputName.value.trim() && this.inputPrice.value && this.inputQuantity.value) {
+    if (this.inputName.value.trim() && this.inputPrice.value.trim() && this.inputQuantity.value.trim() && this.inputAmount.value.trim() && this.inputAmountCheckbox.value) {
 
       this.tablesMargin();
       
       this.name = this.inputName.value;
-      this.price = +this.inputPrice.value;
-      this.quantity = +this.inputQuantity.value;
-      this.amount = this.price * this.quantity;
+      this.amountCheckbox = +this.inputAmountCheckbox.value;
       this.timeLineName = this.timeLineSelect.value;
+
+      if (this.inputPrice.disabled, this.inputQuantity.disabled) {
+          this.amount = +this.inputAmount.value;
+        }
+
+      if (this.inputAmountCheckbox.checked) {
+        this.price = '--';
+        this.quantity = '--';
+      } else {
+        this.price = +this.inputPrice.value;
+        this.quantity = +this.inputQuantity.value;
+        this.amount = this.price * this.quantity;
+      }
 
       this.setInputsState(false);
       this.table.saveData();
@@ -100,12 +112,16 @@ class Row {
         this.setError(this.inputName, this.tdName);
       } 
     
-      if (this.inputPrice.value === "") {
+      if (this.inputPrice.value.trim() === "") {
         this.setError(this.inputPrice, this.tdPrice);
       } 
     
-      if (this.inputQuantity.value === "") {
+      if (this.inputQuantity.value.trim() === "") {
         this.setError(this.inputQuantity, this.tdQuantity);
+      }
+
+      if (this.inputAmount.value.trim() === "") {
+        this.setError(this.inputAmount, this.tdAmount);
       } 
   }
 }
@@ -162,6 +178,10 @@ class Row {
       this.inputQuantity.min = 0;
       this.tdQuantity.appendChild(this.inputQuantity);
 
+      this.inputQuantity.addEventListener("keydown", function(event) {
+        event.currentTarget.className = "form-control";
+      });
+
       this.inputPrice = document.createElement("input");
       this.inputPrice.className = "form-control";
       this.inputPrice.type = "number";
@@ -169,6 +189,10 @@ class Row {
       this.inputPrice.value = this.price;
       this.inputPrice.min = 0;
       this.tdPrice.appendChild(this.inputPrice);
+
+      this.inputPrice.addEventListener("keydown", function(event) {
+        event.currentTarget.className = "form-control";
+      });
 
       this.timeLineSelect = this.getTimeLineComboBox();
       this.tdTimeLines.appendChild(this.timeLineSelect);
@@ -179,51 +203,56 @@ class Row {
       this.timeLineSelect.style.width = "180px";
       this.timeLineSelect.style.textAlign = "center";
 
-      // this.inputAmount = document.createElement("input");
-      // this.inputAmount.type = "number";
-      // this.inputAmount.placeholder = "Enter amount";
-      // this.inputAmount.value = this.amount;
-      // this.tdAmount.appendChild(this.inputAmount);
+      this.inputAmountCheckboxDiv = document.createElement("div");
+      this.inputAmountCheckboxDiv.className = "form-check form-switch";
+
+      this.inputAmountCheckbox = document.createElement("input");
+      this.inputAmountCheckbox.type = "checkbox";
+      this.inputAmountCheckbox.className = "form-check-input";
+      this.inputAmountCheckbox.checked = this.amountCheckbox;
+      this.inputAmountCheckboxDiv.appendChild(this.inputAmountCheckbox);
+      this.tdAmount.appendChild(this.inputAmountCheckboxDiv);
+
+      this.inputAmount = document.createElement("input");
+      this.inputAmount.className = "form-control";
+      this.inputAmount.type = "number";
+      this.inputAmount.placeholder = "Enter amount";
+      this.inputAmount.value = this.amount;
+      this.inputAmount.hidden = !this.inputAmountCheckbox.checked;
+      this.tdAmount.appendChild(this.inputAmount);
+
+      this.inputAmountCheckbox.addEventListener("change", () => {
+          this.inputAmount.hidden = !this.inputAmountCheckbox.checked;
+          this.inputPrice.disabled = this.inputAmountCheckbox.checked;
+          this.inputQuantity.disabled = this.inputAmountCheckbox.checked;
+      });
+
+      this.inputAmount.addEventListener("keydown", function(event) {
+        event.currentTarget.className = "form-control";
+      });
+
+      
 
       this.saveButton.hidden = false;
       this.editButton.hidden = true;
     } else {
       this.tdName.innerHTML = this.name;
       this.tdAmount.innerHTML = this.amount;
-      this.tdPrice.innerHTML = this.price;
-      this.tdQuantity.innerHTML = this.quantity;
       this.tdTimeLines.innerHTML = this.timeLineName;
+
+      if (this.inputAmountCheckbox.checked) {
+        this.tdPrice.innerHTML = '--';
+        this.tdQuantity.innerHTML = '--';
+      } else {
+        this.tdPrice.innerHTML = this.price;
+      this.tdQuantity.innerHTML = this.quantity;
+      }
 
       this.saveButton.hidden = true;
       this.editButton.hidden = false;
     }
   }
 
-  // getTimeLineComboBox() {
-  //   let select = document.createElement('select');
-  //   let option = document.createElement('option');
-  //   option.value = 'None';
-  //   option.innerText = 'None';
-  //   option.style.width = "180px";
-  //   select.appendChild(option);
-
-  //   let store = localStorage.getItem('table');
-  //   if (store) {
-  //     let data = JSON.parse(store);
-  //     for (let item of data) {
-  //       option = document.createElement('option');
-  //       option.value = item.name;
-  //       option.innerText = item.name;
-
-  //       if (item.name === this.timeLineName) {
-  //         option.selected = true;
-  //       }
-
-  //       select.appendChild(option);
-  //     }
-  //   }
-  //   return select;
-  // }
   getTimeLineComboBox() {
     let select = document.createElement('select');
     select.classList.add('timeline-select'); 

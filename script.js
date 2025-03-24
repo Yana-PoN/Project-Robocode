@@ -113,34 +113,55 @@ function deleteConsumptionB() {
         tbodyConsumptionB.rows = [];
     }
 
+
 function save() {
-    const tableIncome = document.getElementById("tableIncomeBody");
     const checkIncome = document.getElementById("flexCheckIncome");
-
-    if (checkIncome.checked) {
-        tableIncome.style.visibility = "visible"; 
-    } else {
-        tableIncome.style.visibility = "hidden"; 
-    }
-
-    const tableConsumption = document.getElementById("tableConsumptionBody");
     const checkConsumption = document.getElementById("flexCheckConsumption");
-
-    if (checkConsumption.checked) {
-        tableConsumption.style.visibility = "visible";
-    } else {
-        tableConsumption.style.visibility = "hidden";
-    } 
-
     const flexCheckComparison = document.getElementById("flexCheckComparison");
-    const planB = document.getElementById("planB");
+    const numberOfPeriods = document.getElementById("numberOfPeriods");
+    const deposit = document.getElementById("exampleInputEmail1");
 
-    if (flexCheckComparison.checked) {
-        planB.hidden = false;
-    } else {
-        planB.hidden = true;
-    }
+    localStorage.setItem("settings", JSON.stringify({
+        income: checkIncome.checked,
+        consumption: checkConsumption.checked,
+        comparison: flexCheckComparison.checked,
+        periods: numberOfPeriods.value,
+        deposit: deposit.value
+    }));
+
+    updateVisibility(); 
 }
+
+function loadSettings() {
+    let s = JSON.parse(localStorage.getItem("settings")) || {
+        income: true,
+        consumption: true,
+        comparison: true,
+        periods: 12,
+        deposit: 0
+    };
+
+    document.getElementById("flexCheckIncome").checked = s.income;
+    document.getElementById("flexCheckConsumption").checked = s.consumption;
+    document.getElementById("flexCheckComparison").checked = s.comparison;
+    document.getElementById("numberOfPeriods").value = s.periods;
+    document.getElementById("exampleInputEmail1").value = s.deposit;
+
+    updateVisibility(); 
+}
+
+function updateVisibility() {
+    const checkIncome = document.getElementById("flexCheckIncome");
+    const checkConsumption = document.getElementById("flexCheckConsumption");
+    const flexCheckComparison = document.getElementById("flexCheckComparison");
+
+    document.getElementById("tableIncomeBody").style.display = checkIncome.checked ? "table-row-group" : "none";
+    document.getElementById("tableConsumptionBody").style.display = checkConsumption.checked ? "table-row-group" : "none";
+    document.getElementById("planB").style.display = flexCheckComparison.checked ? "block" : "none";
+}
+
+document.addEventListener("DOMContentLoaded", loadSettings);
+
 
 const CheckQuantity = document.getElementById("flexCheckQuantity");
 const deposit = document.getElementById("deposit");
@@ -220,7 +241,7 @@ function calculation() {
         }
 
         this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
-        this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Розхід");
+        this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
     }, 100);
 }
 
