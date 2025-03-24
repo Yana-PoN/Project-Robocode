@@ -55,7 +55,7 @@ class RowTimeLines {
   }
 
   saveButtonClick() {
-    if (this.inputName.value && this.inputNumberOfPeriods.value) {
+    if (this.inputName.value.trim() && this.inputNumberOfPeriods.value.trim() && this.inputWeights.value.trim()) {
       if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {
         const colDiv = document.createElement("div");
         colDiv.className = "col-md-6";
@@ -86,20 +86,30 @@ class RowTimeLines {
       this.setInputsState(false);
       this.table.saveData();
     } else {
-      let alertDiv = document.createElement("div");
-      alertDiv.className = "alert alert-warning alert-dismissible fade show";
-      alertDiv.role = "alert";
-      alertDiv.innerHTML = `<strong>Please</strong> fill in all fields.`;
 
-      let closeButton = document.createElement("button");
-      closeButton.type = "button";
-      closeButton.className = "btn-close";
-      closeButton.setAttribute("data-bs-dismiss", "alert");
-      closeButton.setAttribute("aria-label", "Close");
+      if (this.inputName.value.trim() === "") {
+        this.setError(this.inputName, this.tdName);
+      } 
+    
+      if (this.inputNumberOfPeriods.value.trim() === "") {
+        this.setError(this.inputNumberOfPeriods, this.tdNumberOfPeriods);
+      } 
+    
+      if (this.inputWeights.value.trim() === "") {
+        this.setError(this.inputWeights, this.tdWeight);
+      }
+    }
+  }
 
-      alertDiv.appendChild(closeButton);
+  setError(input, td) {
+    input.className = "form-control is-invalid";
+    input.required = true;
+  }
 
-      tbody.appendChild(alertDiv);
+  removeError(input, td) {
+    if (td.children[0].children.length > 0){
+      td.innerHTML = '';
+      td.appendChild(input);
     }
   }
 
@@ -126,10 +136,8 @@ class RowTimeLines {
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
 
-      this.inputName.addEventListener("keydown", function (event) {
-        if (event.key === " ") {
-          event.preventDefault();
-        }
+      this.inputName.addEventListener("keydown", function(event) {
+        event.currentTarget.className = "form-control";
       });
 
       this.inputNumberOfPeriods = document.createElement("input");
@@ -139,6 +147,10 @@ class RowTimeLines {
       this.inputNumberOfPeriods.value = this.numberOfPeriods;
       this.inputNumberOfPeriods.min = 1;
       this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
+
+      this.inputNumberOfPeriods.addEventListener("keydown", function(event) {
+        event.currentTarget.className = "form-control";
+      });
 
       this.inputNumberOfPeriods.onchange = () => {
         this.tdWeight.innerHTML = "";
@@ -162,6 +174,7 @@ class RowTimeLines {
       this.inputWeights = [];
       for (let i = 0; i < count; i++) {
         let inputWeight = document.createElement("input");
+        inputWeight.className = "form-control";
         inputWeight.type = "number";
         inputWeight.placeholder = "Enter number";
         inputWeight.min = 0;
@@ -169,6 +182,7 @@ class RowTimeLines {
         this.inputWeights.push(inputWeight);
         this.tdWeight.appendChild(inputWeight);
       }
+
 
       this.saveButton.hidden = false;
       this.editButton.hidden = true;

@@ -48,6 +48,7 @@ class Table {
           row.price = item.price;
           row.quantity = item.quantity;
           row.amount = item.amount;
+          row.isShowAmountInput = item.isAmount;
           row.timeLineName = item.timeline;
           row.setInputsState(false); 
           this.rows.push(row);
@@ -63,6 +64,7 @@ class Table {
           result.push(
             {
               name: row.name,
+              isAmount: row.isShowAmountInput,
               price: row.price,
               quantity: row.quantity,
               amount: row.amount,
