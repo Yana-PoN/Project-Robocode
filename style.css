@@ -114,11 +114,15 @@ td {
 }
 
 .canvas-wrapper {
-  width: 480px;
-  height: 480px;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   text-align: center;
+  justify-content: space-between;
+}
+
+.canvas-size {
+  width: 400px;
+  height: 400px;
 }
 
 .table3 {
@@ -135,10 +139,6 @@ td {
   color: blue;
   text-align: center;
   cursor: pointer;
-}
-
-.plans {
-  text-decoration: none;
 }
 
 .PlanB {
@@ -214,3 +214,4 @@ td {
     align-items: center;
     width: 100%;
   }
+

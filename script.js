@@ -47,9 +47,6 @@ startTable();
 const spinner = document.getElementById("spinner");
 spinner.hidden = true;
 
-const plans = document.getElementById("plans");
-plans.hidden = true;
-
 function deleteIncome() {
     let tbodyIncome = document.getElementById("tableRowsInc");
 
@@ -106,7 +103,7 @@ function save() {
     const isSimpleReport = document.getElementById("exampleRadios1");
 
     let isErrors = false;
-    if (numberOfPeriods.value.trim() === "" || +numberOfPeriods.value < 1) {
+    if (numberOfPeriods.value.trim() === "" || +numberOfPeriods.value < 1 || +numberOfPeriods.value > 100) {
         setError(numberOfPeriods);
         isErrors = true;
     }
@@ -236,9 +233,6 @@ function calculation() {
 
         calculation.drawTable();
 
-        const plans = document.getElementById("plans");
-        plans.hidden = false;
-
         const incomeLabels = calculation.incomeItemsA.map(function (item) {
             return item.name;
         });
@@ -280,31 +274,26 @@ function calculation() {
 
         const checkComparison = document.getElementById("flexCheckComparison");
 
-        const planBText = document.getElementById("planBText");
-        const planAText = document.getElementById("planAText");
-
-
         if (checkComparison.checked) {
+
             if (checkIncome.checked) {
-                this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
-                this.pieIncomeB = createPie("incomePieB", incomeLabelsB, incomeAmountsB, "Дохід");
-                planBText.hidden = false;
-                planAText.hidden = false;
+                this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід план А");
+                this.pieIncomeB = createPie("incomePieB", incomeLabelsB, incomeAmountsB, "Дохід план Б");
             }
 
             if (checkConsumption.checked) {
-                this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
-                this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати");
-                planBText.hidden = false;
-                planAText.hidden = false;
+                this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати план А");
+                this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати план Б");
             }
         } else {
             this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
             this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
-            planBText.hidden = true;
-            planAText.hidden = true;
         }
     }, 100);
 }
+
+function round(value) {
+    return Math.round(value * 100) / 100;
+  }
 
 

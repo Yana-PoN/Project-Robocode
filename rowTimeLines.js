@@ -139,7 +139,7 @@ class RowTimeLines {
       this.inputName = document.createElement("input");
       this.inputName.className = "form-control";
       this.inputName.type = "text";
-      this.inputName.placeholder = "Enter name";
+      this.inputName.placeholder = "Введіть ім'я";
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
 
@@ -150,7 +150,7 @@ class RowTimeLines {
       this.inputNumberOfPeriods = document.createElement("input");
       this.inputNumberOfPeriods.className = "form-control";
       this.inputNumberOfPeriods.type = "number";
-      this.inputNumberOfPeriods.placeholder = "Enter number";
+      this.inputNumberOfPeriods.placeholder = "Введіть кількість";
       this.inputNumberOfPeriods.value = this.numberOfPeriods;
       this.inputNumberOfPeriods.min = 1;
       this.tdNumberOfPeriods.appendChild(this.inputNumberOfPeriods);
@@ -168,7 +168,7 @@ class RowTimeLines {
           let inputWeight = document.createElement("input");
           inputWeight.className = "form-control";
           inputWeight.type = "number";
-          inputWeight.placeholder = "Enter number";
+          inputWeight.placeholder = "Введіть число";
           inputWeight.min = 0;
           inputWeight.value = this.weights[i] || '';
 
@@ -188,7 +188,7 @@ class RowTimeLines {
         let inputWeight = document.createElement("input");
         inputWeight.className = "form-control";
         inputWeight.type = "number";
-        inputWeight.placeholder = "Enter number";
+        inputWeight.placeholder = "Введіть число";
         inputWeight.min = 0;
         inputWeight.value = this.weights[i] || '';
         this.inputWeights.push(inputWeight);
@@ -201,10 +201,24 @@ class RowTimeLines {
     } else {
       this.tdName.innerHTML = this.name;
       this.tdNumberOfPeriods.innerHTML = this.numberOfPeriods;
-      this.tdWeight.innerHTML = this.weights;
+      this.tdWeight.innerHTML = this.getPercentages();
 
       this.saveButton.hidden = true;
       this.editButton.hidden = false;
     }
   }
+
+  getPercentages() {
+        let timeLinePercentages = [];
+        let sumOfWeights = 0;
+        this.weights.forEach(num => sumOfWeights += +num);
+
+        let result = [];
+        if (sumOfWeights !== 0) {
+          this.weights.forEach(num => result.push(num + '(' + round(+num / sumOfWeights) * 100 + '%)'));
+        } else {
+          this.weights.forEach(num => result.push(num + '(' + round(1 / weights.length) * 100 + '%)'));
+        }
+        return result;
+    }
 }

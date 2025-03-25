@@ -74,12 +74,12 @@ class Row {
       return;
     }
 
-    if (!this.inputAmountCheckbox.checked && this.inputQuantity.value.trim() === "") {
+    if (!this.inputAmountCheckbox.checked && (this.inputQuantity.value.trim() === "" || +this.inputQuantity.value < 0)) {
       this.setError(this.inputQuantity, this.tdQuantity);
       return;
     }
 
-    if (this.inputAmountCheckbox.checked && this.inputAmount.value.trim() === "") {
+    if (this.inputAmountCheckbox.checked && (this.inputAmount.value.trim() === "" || +this.inputAmount.value < 0)) {
       this.setError(this.inputAmount, this.tdAmount);
       return;
     }
@@ -94,7 +94,7 @@ class Row {
       } else {
         this.price = +this.inputPrice.value;
         this.quantity = +this.inputQuantity.value;
-        this.amount = this.price * this.quantity;
+        this.amount = round(this.price * this.quantity);
       }
 
       this.setInputsState(false);
@@ -135,7 +135,7 @@ class Row {
       this.inputName = document.createElement("input");
       this.inputName.className = "form-control";
       this.inputName.type = "text";
-      this.inputName.placeholder = "Enter name";
+      this.inputName.placeholder = "Введіть ім'я";
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
 
@@ -206,7 +206,7 @@ class Row {
       this.inputAmount = document.createElement("input");
       this.inputAmount.className = "form-control";
       this.inputAmount.type = "number";
-      this.inputAmount.placeholder = "Enter amount";
+      this.inputAmount.placeholder = "Введіть суму";
       this.inputAmount.value = this.amount;
       this.tdAmount.innerHTML = '';
       this.tdAmount.appendChild(this.inputAmount);
@@ -216,7 +216,7 @@ class Row {
       this.inputQuantity = document.createElement("input");
       this.inputQuantity.className = "form-control";
       this.inputQuantity.type = "number";
-      this.inputQuantity.placeholder = "Enter number";
+      this.inputQuantity.placeholder = "Введіть кількість";
       this.inputQuantity.value = this.quantity;
       this.inputQuantity.min = 0;
       this.tdQuantity.innerHTML = '';
@@ -229,7 +229,7 @@ class Row {
       this.inputPrice = document.createElement("input");
       this.inputPrice.className = "form-control";
       this.inputPrice.type = "number";
-      this.inputPrice.placeholder = "Enter number";
+      this.inputPrice.placeholder = "Введіть ціну";
       this.inputPrice.value = this.price;
       this.inputPrice.min = 0;
       this.tdPrice.innerHTML = '';
@@ -246,8 +246,8 @@ class Row {
     select.classList.add('timeline-select');
 
     let defaultOption = document.createElement('option');
-    defaultOption.value = 'None';
-    defaultOption.innerText = 'None';
+    defaultOption.value = 'Нема';
+    defaultOption.innerText = 'Нема';
     defaultOption.style.fontWeight = 'bold';
     select.appendChild(defaultOption);
 

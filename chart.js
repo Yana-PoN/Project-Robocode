@@ -47,9 +47,12 @@ function getRandomColor() {
 }
 
 function createPie(id, labels, amounts, title) {
+    const div = document.createElement("div");
+    div.className = "canvas-size";
     const canvas = document.createElement("canvas");
     canvas.id = id;
-    canvasWrapper.append(canvas);
+    div.appendChild(canvas)
+    canvasWrapper.append(div);
     const pie = document.getElementById(id);
 
     const data = {

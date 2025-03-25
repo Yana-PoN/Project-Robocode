@@ -152,7 +152,7 @@ class Calculation {
 
       const incomeBalance = [];
       for (let i = 0; i < incomeValues.length; i++) {
-        let value = this.round(i == 0 ? incomeValues[i] : incomeValues[i] + incomeBalance[i - 1]);
+        let value = round(i == 0 ? incomeValues[i] : incomeValues[i] + incomeBalance[i - 1]);
         incomeBalance.push(value);
       }
       this.createRow('Баланс', incomeBalance, this.ResultType);
@@ -173,7 +173,7 @@ class Calculation {
 
       const consumptionBalance = [];
       for (let i = 0; i < consumptionValues.length; i++) {
-        let value = this.round(i == 0 ? consumptionValues[i] : consumptionValues[i] + consumptionBalance[i - 1]);
+        let value = round(i == 0 ? consumptionValues[i] : consumptionValues[i] + consumptionBalance[i - 1]);
         consumptionBalance.push(value);
       }
       this.createRow('Баланс', consumptionBalance, this.ResultType);
@@ -189,15 +189,15 @@ class Calculation {
       let result = (incomeValues[i] ?? 0) - (consumptionValues[i] ?? 0);
 
       if (useDeposit && i > 0) {
-        const depositValue = balanceValues[i - 1] > 0 ? this.round(balanceValues[i - 1] * (+depositPercent / 100)) : 0;
+        const depositValue = balanceValues[i - 1] > 0 ? round(balanceValues[i - 1] * (+depositPercent / 100)) : 0;
         deposit.push(depositValue);
-        incomeValues[i] = this.round(incomeValues[i] + depositValue)
-        result = this.round(result + depositValue);
+        incomeValues[i] = round(incomeValues[i] + depositValue)
+        result = round(result + depositValue);
       }
 
       balance += result;
       resultValues[i] = result;
-      balanceValues.push(this.round(balance));
+      balanceValues.push(round(balance));
     }
 
     this.createRow("----------", [], this.GroupType);
@@ -231,10 +231,10 @@ class Calculation {
 
   getValuesByRow(row) {
     let values = [];
-    if (row.timeline !== 'None') {
+    if (row.timeline !== 'Нема') {
       const timeLineWages = this.getTimeLinePercentages(row.timeline);
       for (let i = 0; i < this.periodsCount; i++) {
-        const value = this.round(row.amount * timeLineWages[i % timeLineWages.length]);
+        const value = round(row.amount * timeLineWages[i % timeLineWages.length]);
         values.push(value);
       }
     } else {
@@ -268,7 +268,7 @@ class Calculation {
   getBalance(values) {
     const balance = [];
     for (let i = 0; i < values.length; i++) {
-      balance.push(i === 0 ? values[i] : this.round(values[i] + balance[i - 1]));
+      balance.push(i === 0 ? values[i] : round(values[i] + balance[i - 1]));
     }
 
     return balance;
@@ -334,9 +334,5 @@ class Calculation {
 
     this.tbody.appendChild(trA);
     this.tbody.appendChild(trB);
-  }
-
-  round(value) {
-    return Math.round(value * 100) / 100;
   }
 }

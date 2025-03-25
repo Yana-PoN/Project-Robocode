@@ -18,12 +18,12 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Лінії часу</button>
+        </ul>
+        <button type="button" class="buttonIcons btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSettings">
+          <i class="bi bi-gear ms-auto"></i>
+        </button>
       </div>
     </div>
-
-    <button type="button" class="buttonIcons btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSettings">
-      <i class="bi bi-gear ms-auto"></i>
-    </button>
   </nav>
 
 
@@ -61,7 +61,7 @@
 
           <div class="mb-3">
             <label for="numberOfPeriods" class="form-label">Кількість періодів</label>
-            <input type="number" class="form-control" id="numberOfPeriods" aria-describedby="emailHelp" min="1" value="12">
+            <input type="number" class="form-control" id="numberOfPeriods" aria-describedby="emailHelp" min="1" value="12" max="100">
           </div>
 
           <div class="form-check">
@@ -124,7 +124,7 @@
               <tr>
                 <th>Назва</th>
                 <th>Кількість періодів</th>
-                <th>Веса</th>
+                <th>Вага</th>
                 <th>##</th>
               </tr>
             </thead>
@@ -357,13 +357,8 @@
     </tbody>
   </table>
 
-  <div class="plans" id="plans">
-    <h4 id="planAText">План А</h4>
-    <h4 id="planBText">План Б</h4>
-  </div>
-
   <div id="canvas-wrapper" class="canvas-wrapper">
-    <!-- <canvas id="pie"></canvas> -->
+    <div class="pies"></div>
   </div>
 
 
