@@ -1,170 +1,215 @@
 table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.tableIncomeBody {
+  flex-grow: 1;
+}
+
+.tableConsumptionBody {
+  flex-grow: 1;
+}
+
+.checkboxAddText {
+  display: flex;
+  justify-content: space-between;
 }
 
 th, td {
-    padding: 10px;
-    text-align: center;
+  padding: 10px;
+  text-align: center;
 }
 
 th {
-    background-color: rgb(63, 63, 255);
-    color: rgb(255, 255, 255);
+  background-color: rgb(63, 63, 255);
+  color: rgb(255, 255, 255);
 }
 
 td {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .input {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
 }
 
 .button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .form-floating {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tables {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 50px;
 }
 
 .incomeText {
-    color: blue;
+  color: blue;
 }
 
 .consumptionText {
-    color: blue;
+  color: blue;
+}
+
+.checkboxAddText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 175px;
+}
+
+.bi {
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+}
+
+.buttonIcons {
+  margin-right: 10px;
+}
+
+.numberOfPeriods {
+  font-size: 10px;
+  margin-left: 15px;
+  height: 18px;
+}
+
+.custom-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 7px;
+  cursor: pointer;
+}
+
+  .custom-btn i {
+    color: black;
+  }
+
+.incomeCheck {
+  cursor: pointer;
+}
+
+.consumptionCheck {
+  cursor: pointer;
+}
+
+.modal-lg {
+  max-width: 90%;
+}
+
+.canvas-wrapper {
+  width: 480px;
+  height: 480px;
+  display: flex;
+  flex-direction: row;
+}
+
+.table3 {
+  margin-top: 10px;
+}
+
+.deleteCopy {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.plan {
+  color: blue;
+  text-align: center;
+  cursor: pointer;
+}
+
+.plans {
+  text-decoration: none;
+}
+
+.PlanB {
+  display: none;
+}
+
+.spinner {
+  font-size: 50px;
+  font-weight: bold;
+  color: green;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.calcTable {
+  margin: 20px;
+}
+
+.calcPlan {
+  text-align: center;
+  font-size: 150%;
+}
+
+.calcGroup {
+  text-align: left;
+  font-size: 110%;
+  padding-left: 30px;
+  font-weight: bold;
+}
+
+.calcResult {
+  text-align: left;
+  padding-left: 40px;
+  color: blue;
+}
+
+.calcPlanResult {
+  font-weight: bold;
+}
+
+.calcItem {
+  text-align: left;
+  padding-left: 50px;
+}
+
+.calcValueGood {
+  color: green;
+}
+
+.calcValueBad {
+  color: red;
+}
+
+.plans {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .checkboxAddText {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 175px;
-}
-
-.bi {
-    font-size: 28px;
-    cursor: pointer;
-    color: white;
-    text-align: center;
-}
-
-.buttonIcons {
-    margin-right: 10px;
-}
-
-.numberOfPeriods {
-    font-size: 10px;
-    margin-left: 15px;
-    height: 18px;
-}
-
-.custom-btn {
-    background: none; 
-    border: none; 
-    color: black;
-    font-size: 7px; 
-    cursor: pointer; 
-}
-
-.custom-btn i {
-    color: black; 
-}
-
-.incomeCheck {
-    cursor: pointer;
-}
-
-.consumptionCheck {
-    cursor: pointer;
-}
-
-.modal-lg {
-    max-width: 90%;
-}
-
-.canvas-wrapper {
-    width: 900px;
-    height: 900px;
-    display: flex;
-    flex-direction: row;
-}
-
-.table3 {
-    margin-top: 10px;
-}
-
-.deleteCopy {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.plan {
-    color: blue;
-    text-align: center;
-    cursor: pointer;
-}
-
-.plans {
-    text-decoration: none;
-}
-
-.PlanB {
-    display: none;
-}
-
-.spinner {
-    font-size: 50px; 
-    font-weight: bold;
-    color: green;
-    display: inline-block;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.calcPlan {
-    text-align: center;
-    font-size: 150%;
-  }
-  
-  .calcGroup {
-    text-align: left;
-    font-size: 110%;
-    padding-left: 30px;
-    font-weight: bold;
-  }
-  
-  .calcResult {
-    text-align: left;
-    padding-left: 40px;
-    color: blue;
-  }
-  
-  .calcPlanResult {
-    font-weight: bold;
-  }
-  
-  .calcItem {
-    text-align: left;
-    padding-left: 50px;
+    width: 100%;
   }

@@ -62,80 +62,46 @@ class Row {
     this.tbody.appendChild(this.tr);
   }
 
-  tablesMargin() {
-    const addInc = document.getElementById("addInc");
-    addInc.style.marginLeft = "0px";
-    const deleteInc = document.getElementById("deleteInc");
-    deleteInc.style.marginRight = "0px";
-
-    const addCons = document.getElementById("addCons");
-    addCons.style.marginLeft = "0px";
-    const deleteCons = document.getElementById("deleteCons");
-    deleteCons.style.marginRight = "0px";
-
-    const addIncB = document.getElementById("addIncB");
-    addIncB.style.marginLeft = "0px";
-    const deleteIncB = document.getElementById("deleteIncB");
-    deleteIncB.style.marginRight = "0px";
-
-    const addConsB = document.getElementById("addConsB");
-    addConsB.style.marginLeft = "0px";
-    const deleteConsB = document.getElementById("deleteConsB");
-    deleteConsB.style.marginRight = "0px";
-  }
 
   saveButtonClick() {
-    if (this.inputName.value.trim()
-      && ((!this.inputAmountCheckbox.checked && this.inputPrice.value.trim() && this.inputQuantity.value.trim()) 
-        || (this.inputAmountCheckbox.checked && this.inputAmount.value.trim()))) {
+    // if (this.inputName.value.trim()
+    //   && ((!this.inputAmountCheckbox.checked && this.inputPrice.value.trim() && this.inputQuantity.value.trim()) 
+    //     || (this.inputAmountCheckbox.checked && this.inputAmount.value.trim()))) {
 
-      this.tablesMargin();
+    if (this.inputName.value.trim() === "") {
+      this.setError(this.inputName, this.tdName);
+    }
+
+    if (!this.inputAmountCheckbox.checked && (this.inputPrice.value.trim() === "" || +this.inputPrice.value < 0)) {
+      this.setError(this.inputPrice, this.tdPrice);
+      return;
+    }
+
+    if (!this.inputAmountCheckbox.checked && this.inputQuantity.value.trim() === "") {
+      this.setError(this.inputQuantity, this.tdQuantity);
+      return;
+    }
+
+    if (this.inputAmountCheckbox.checked && this.inputAmount.value.trim() === "") {
+      this.setError(this.inputAmount, this.tdAmount);
+      return;
+    }
+
 
       this.name = this.inputName.value;
       this.isShowAmountInput = this.inputAmountCheckbox.checked;
       this.timeLineName = this.timeLineSelect.value;
 
-      // if (this.inputPrice.disabled, this.inputQuantity.disabled) {
-      //   this.amount = +this.inputAmount.value;
-      // }
-
       if (this.inputAmountCheckbox.checked) {
         this.amount = +this.inputAmount.value;
-      //   this.price = +this.inputPrice.value;
-      //   this.quantity = +this.inputQuantity.value;
       } else {
         this.price = +this.inputPrice.value;
         this.quantity = +this.inputQuantity.value;
         this.amount = this.price * this.quantity;
       }
 
-      this.th = document.getElementById("th");
-
-      // this.th.hidden = true;
-      // this.tdCheckbox.hidden = true;
-      // this.inputAmountCheckboxDiv.hidden = true;
-
       this.setInputsState(false);
       this.table.saveData();
-
-    } else {
-
-      if (this.inputName.value.trim() === "") {
-        this.setError(this.inputName, this.tdName);
-      }
-
-      if (!this.inputAmountCheckbox.checked && this.inputPrice.value.trim() === "") {
-        this.setError(this.inputPrice, this.tdPrice);
-      }
-
-      if (!this.inputAmountCheckbox.checked && this.inputQuantity.value.trim() === "") {
-        this.setError(this.inputQuantity, this.tdQuantity);
-      }
-
-      if (this.inputAmountCheckbox.checked && this.inputAmount.value.trim() === "") {
-        this.setError(this.inputAmount, this.tdAmount);
-      }
-    }
   }
 
   setError(input, td) {
@@ -152,19 +118,11 @@ class Row {
 
   editButtonClick() {
     this.setInputsState(true);
-
-    // this.th = document.getElementById("th");
-
-    // this.th.hidden = false;
-    // this.tdCheckbox.hidden = false;
-    // this.inputAmountCheckboxDiv.hidden = false;
   }
 
   deleteButtonClick() {
     this.tbody.removeChild(this.tr);
     this.status = 'Deleted';
-
-    this.tablesMargin();
 
     this.table.saveData();
   }
@@ -191,11 +149,16 @@ class Row {
       this.timeLineSelect = this.getTimeLineComboBox();
       this.tdTimeLines.appendChild(this.timeLineSelect);
 
-      this.inputName.style.width = "100px";
-      // this.inputPrice.style.width = "100px";
-      // this.inputQuantity.style.width = "100px";
+      this.inputName.style.minWidth = "100px";
       this.timeLineSelect.style.width = "180px";
       this.timeLineSelect.style.textAlign = "center";
+
+      this.timeLineSelect.style.width = '200px';
+      this.timeLineSelect.style.padding = '8px';
+      this.timeLineSelect.style.borderRadius = '6px';
+      this.timeLineSelect.style.border = '1px solid #ccc';
+      this.timeLineSelect.style.backgroundColor = '#fff';
+      this.timeLineSelect.style.cursor = 'pointer';
 
       this.showInputs(this.isShowAmountInput);
 
@@ -211,9 +174,6 @@ class Row {
 
       this.inputAmountCheckbox.addEventListener("change", () => {
         this.showInputs(this.inputAmountCheckbox.checked);
-        // this.inputAmount.hidden = !this.inputAmountCheckbox.checked;
-        // this.inputPrice.disabled = this.inputAmountCheckbox.checked;
-        // this.inputQuantity.disabled = this.inputAmountCheckbox.checked;
       });
 
       this.inputAmount.addEventListener("keydown", function (event) {
@@ -310,14 +270,6 @@ class Row {
         select.appendChild(option);
       });
     }
-
-
-    select.style.width = '200px';
-    select.style.padding = '8px';
-    select.style.borderRadius = '6px';
-    select.style.border = '1px solid #ccc';
-    select.style.backgroundColor = '#fff';
-    select.style.cursor = 'pointer';
 
     return select;
   }

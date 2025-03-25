@@ -17,27 +17,16 @@ class Calculation {
   resultValuesB = [];
   balanceValuesB = [];
 
-  isSimple = false;
+  isSimpleReport = false;
   isBlockCreateRow = false;
 
- 
-
-  if (simple = checked) {
-    simple = document.getElementById("exampleRadios1");
-    
-    isSimple = true;
-  } else (extended = checked) {
-    extended = document.getElementById("exampleRadios2");
-    isSimple = false;
-  }
-  
-  constructor(incomeA, consumptionA, incomeB, consumptionB, periodsCount, depositRate, timeLines, theadRow, tbody) {
+  constructor(incomeA, consumptionA, incomeB, consumptionB, periodsCount, isSimpleReport, timeLines, theadRow, tbody) {
     this.incomeA = incomeA;
     this.consumptionA = consumptionA;
     this.incomeB = incomeB;
     this.consumptionB = consumptionB;
     this.periodsCount = periodsCount;
-    this.depositRate = depositRate;
+    this.isSimpleReport = isSimpleReport;
     this.timeLines = timeLines;
     this.theadRow = theadRow;
     this.tbody = tbody;
@@ -104,6 +93,13 @@ class Calculation {
         this.consumptionValuesB,
         this.resultValuesB,
         this.balanceValuesB);
+
+      this.createRow("", []);
+      this.createRow("Порівняння:", [], this.PlanType);
+      this.createRow("", []);
+      this.createComparisonRows("Результат", this.resultValuesA, this.resultValuesB);
+      this.createRow("", []);
+      this.createComparisonRows("Баланс", this.balanceValuesA, this.balanceValuesB);
     }
   }
 
@@ -123,7 +119,7 @@ class Calculation {
     const checkIncome = document.getElementById("flexCheckIncome");
     const checkConsumption = document.getElementById("flexCheckConsumption");
 
-    if (this.isSimple) {
+    if (this.isSimpleReport) {
       this.isBlockCreateRow = true;
     }
 
@@ -166,45 +162,48 @@ class Calculation {
       this.createRow('Баланс', consumptionBalance, this.ResultType);
     }
 
-    if (checkIncome.checked && checkConsumption.checked) {
-      let balance = 0;
+    let balance = 0;
 
-      const useDeposit = document.getElementById("flexCheckQuantity").checked;
-      const depositPercent = document.getElementById("exampleInputEmail1").value;
-      const deposit = [0];
+    const useDeposit = document.getElementById("flexCheckQuantity").checked;
+    const depositPercent = document.getElementById("exampleInputEmail1").value;
+    const deposit = [0];
 
-      for (let i = 0; i < this.periodsCount; i++) {
-        let result = (incomeValues[i] ?? 0) - (consumptionValues[i] ?? 0);
+    for (let i = 0; i < this.periodsCount; i++) {
+      let result = (incomeValues[i] ?? 0) - (consumptionValues[i] ?? 0);
 
-        if (useDeposit && i > 0) {
-          const depositValue = this.round(balanceValues[i - 1] * (+depositPercent / 100));
-          deposit.push(depositValue);
-          incomeValues[i] = this.round(incomeValues[i] + depositValue)
-          result = this.round(result + depositValue);
-        }
-
-        balance += result;
-        resultValues[i] = result;
-        balanceValues.push(this.round(balance));
+      if (useDeposit && i > 0) {
+        const depositValue = balanceValues[i - 1] > 0 ? this.round(balanceValues[i - 1] * (+depositPercent / 100)) : 0;
+        deposit.push(depositValue);
+        incomeValues[i] = this.round(incomeValues[i] + depositValue)
+        result = this.round(result + depositValue);
       }
 
-      this.createRow("----------", [], this.GroupType);
+      balance += result;
+      resultValues[i] = result;
+      balanceValues.push(this.round(balance));
+    }
 
-      if (useDeposit) {
-        this.createRow("Депозит", deposit, this.ResultType);
-        this.createRow("Дохід депозиту", this.getBalance(deposit), this.ResultType);
-      }
+    this.createRow("----------", [], this.GroupType);
 
-      this.isBlockCreateRow = false;
+    if (useDeposit) {
+      this.createRow("Депозит", deposit, this.ResultType);
+      this.createRow("Дохід депозиту", this.getBalance(deposit), this.ResultType);
+    }
 
-      if (this.isSimple) {
+    this.isBlockCreateRow = false;
+
+    if (this.isSimpleReport) {
+      if (checkIncome.checked && income.length > 0) {
         this.createRow("Дохід", incomeValues, this.GroupType);
+      }
+
+      if (checkConsumption.checked && consumptionValues.length > 0) {
         this.createRow("Витрати", consumptionValues, this.GroupType);
       }
-
-      this.createRow("Результат", resultValues, this.PlanResult);
-      this.createRow("Баланс", balanceValues, this.PlanResult);
     }
+
+    this.createRow("Результат", resultValues, this.PlanResult);
+    this.createRow("Баланс", balanceValues, this.PlanResult);
   }
 
   getValuesByRow(row) {
@@ -271,6 +270,43 @@ class Calculation {
     }
 
     this.tbody.appendChild(tr);
+  }
+
+  createComparisonRows(name, valuesA, valuesB) {
+
+    if (this.isBlockCreateRow) return;
+
+    const trA = document.createElement("tr");
+    const trB = document.createElement("tr");
+
+    let nameColumn = document.createElement("td");
+    nameColumn.innerText = name + ' План А';
+    nameColumn.className = this.PlanResult;
+
+    trA.appendChild(nameColumn);
+
+    nameColumn = document.createElement("td");
+    nameColumn.innerText = name + ' План Б';
+    nameColumn.className = this.PlanResult;
+
+    trB.appendChild(nameColumn);
+
+    for (let i = 0; i < valuesA.length; i++) {
+      const valueColumnA = document.createElement("td");
+      const valueColumnB = document.createElement("td");
+
+      valueColumnA.innerText = valuesA[i];
+      valueColumnA.className = valuesA[i] > valuesB[i] ? 'calcValueGood' : 'calcValueBad';
+
+      valueColumnB.innerText = valuesB[i];
+      valueColumnB.className = valuesA[i] < valuesB[i] ? 'calcValueGood' : 'calcValueBad';
+
+      trA.appendChild(valueColumnA);
+      trB.appendChild(valueColumnB);
+    }
+
+    this.tbody.appendChild(trA);
+    this.tbody.appendChild(trB);
   }
 
   round(value) {

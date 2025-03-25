@@ -55,7 +55,14 @@ class RowTimeLines {
   }
 
   saveButtonClick() {
-    if (this.inputName.value.trim() && this.inputNumberOfPeriods.value.trim() && this.inputWeights.value.trim()) {
+    let errorWeights = [];
+    this.inputWeights.forEach(i => {
+      if (!i.value.trim()) {
+        errorWeights.push(i);
+      }
+    });
+
+    if (this.inputName.value.trim() && this.inputNumberOfPeriods.value.trim() && errorWeights.length === 0) {
       if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {
         const colDiv = document.createElement("div");
         colDiv.className = "col-md-6";
@@ -94,9 +101,9 @@ class RowTimeLines {
       if (this.inputNumberOfPeriods.value.trim() === "") {
         this.setError(this.inputNumberOfPeriods, this.tdNumberOfPeriods);
       } 
-    
-      if (this.inputWeights.value.trim() === "") {
-        this.setError(this.inputWeights, this.tdWeight);
+
+      if (errorWeights.length > 0) {
+        errorWeights.forEach(i => this.setError(i, this.tdWeight));
       }
     }
   }
@@ -164,6 +171,11 @@ class RowTimeLines {
           inputWeight.placeholder = "Enter number";
           inputWeight.min = 0;
           inputWeight.value = this.weights[i] || '';
+
+          inputWeight.addEventListener("keydown", function (event) {
+            event.currentTarget.className = "form-control";
+          });
+
           this.inputWeights.push(inputWeight);
           this.tdWeight.appendChild(inputWeight);
         }
