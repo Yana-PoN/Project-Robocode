@@ -211,36 +211,36 @@ function calculation() {
         const plans = document.getElementById("plans");
         plans.hidden = false;
 
-        const incomeLabels = tableIncomeA.getData().map(function (item) {
+      const incomeLabels = calculation.incomeItemsA.map(function (item) {
             return item.name;
         });
 
-        const incomeAmounts = tableIncomeA.getData().map(function (item) {
+      const incomeAmounts = calculation.incomeItemsA.map(function (item) {
             return item.amount;
         });
 
-        const consumptionLabels = tableConsumptionA.getData().map(function (item) {
+      const consumptionLabels = calculation.consumptionItemsA.map(function (item) {
             return item.name;
         });
 
-        const consumptionAmounts = tableConsumptionA.getData().map(function (item) {
+      const consumptionAmounts = calculation.consumptionItemsA.map(function (item) {
             return item.amount;
         });
 
 
-        const incomeLabelsB = tableIncomeB.getData().map(function (item) {
+      const incomeLabelsB = calculation.incomeItemsB.map(function (item) {
             return item.name;
         });
 
-        const incomeAmountsB = tableIncomeB.getData().map(function (item) {
+      const incomeAmountsB = calculation.incomeItemsB.map(function (item) {
             return item.amount;
         });
 
-        const consumptionLabelsB = tableConsumptionB.getData().map(function (item) {
+      const consumptionLabelsB = calculation.consumptionItemsB.map(function (item) {
             return item.name;
         });
 
-        const consumptionAmountsB = tableConsumptionB.getData().map(function (item) {
+      const consumptionAmountsB = calculation.consumptionItemsB.map(function (item) {
             return item.amount;
         });
 
@@ -250,15 +250,32 @@ function calculation() {
         const canvasWrapper = document.getElementById("canvas-wrapper");
         canvasWrapper.innerHTML = '';
 
-        if (checkIncome.checked) {
-            this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
-            this.pieIncomeB = createPie("incomePieB", incomeLabelsB, incomeAmountsB, "Дохід");
-        }
+        const checkComparison = document.getElementById("flexCheckComparison");
 
-        if (checkConsumption.checked) {
+        const planBText = document.getElementById("planBText");
+        const planAText = document.getElementById("planAText");
+
+
+    if (checkComparison.checked) {
+            if (checkIncome.checked) {
+                this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
+                this.pieIncomeB = createPie("incomePieB", incomeLabelsB, incomeAmountsB, "Дохід");
+                planBText.hidden = false; 
+                planAText.hidden = false;
+            }
+
+            if (checkConsumption.checked) {
+                this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
+                this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати");
+                planBText.hidden = false; 
+                planAText.hidden = false; 
+            }
+        } else {
+            this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
             this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
-            this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати");
-        }
+            planBText.hidden = true; 
+            planAText.hidden = true; 
+        }  
     }, 100);
 }
 

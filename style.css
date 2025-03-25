@@ -118,6 +118,7 @@ td {
   height: 480px;
   display: flex;
   flex-direction: row;
+  text-align: center;
 }
 
 .table3 {

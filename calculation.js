@@ -17,6 +17,11 @@ class Calculation {
   resultValuesB = [];
   balanceValuesB = [];
 
+  incomeItemsA = [];
+  consumptionItemsA = [];
+  incomeItemsB = [];
+  consumptionItemsB = [];
+
   isSimpleReport = false;
   isBlockCreateRow = false;
 
@@ -79,7 +84,10 @@ class Calculation {
       this.incomeValuesA,
       this.consumptionValuesA,
       this.resultValuesA,
-      this.balanceValuesA);
+      this.balanceValuesA,
+      this.incomeItemsA,
+      this.consumptionItemsA
+    );
 
     if (checkComparison.checked) {
       this.createRow("", []);
@@ -92,7 +100,10 @@ class Calculation {
         this.incomeValuesB,
         this.consumptionValuesB,
         this.resultValuesB,
-        this.balanceValuesB);
+        this.balanceValuesB,
+        this.incomeItemsB,
+        this.consumptionItemsB
+      );
 
       this.createRow("", []);
       this.createRow("Порівняння:", [], this.PlanType);
@@ -109,7 +120,9 @@ class Calculation {
     incomeValues,
     consumptionValues,
     resultValues,
-    balanceValues) {
+    balanceValues,
+    incomeItems,
+    consumptionItems) {
     for (let i = 1; i <= this.periodsCount; i++) {
       incomeValues.push(0);
       consumptionValues.push(0);
@@ -131,6 +144,8 @@ class Calculation {
           incomeValues[i] += values[i];
         }
         this.createRow(v.name, values);
+
+        this.addItemTo(incomeItems, v.name, values);
       });
 
       this.createRow('Всього', incomeValues, this.ResultType);
@@ -151,6 +166,8 @@ class Calculation {
           consumptionValues[i] += values[i];
         }
         this.createRow(v.name, values);
+
+        this.addItemTo(consumptionItems, v.name, values);
       });
       this.createRow('Всього', consumptionValues, this.ResultType);
 
@@ -206,6 +223,12 @@ class Calculation {
     this.createRow("Баланс", balanceValues, this.PlanResult);
   }
 
+  addItemTo(items, name, values) {
+    let sum = 0;
+    values.forEach(v => sum += v);
+    items.push({ name: name, amount: sum })
+  }
+
   getValuesByRow(row) {
     let values = [];
     if (row.timeline !== 'None') {
@@ -230,7 +253,11 @@ class Calculation {
         let timeLinePercentages = [];
         let sumOfWeights = 0;
         weights.forEach(num => sumOfWeights += +num);
-        weights.forEach(num => timeLinePercentages.push(+num / sumOfWeights));
+        if (sumOfWeights !== 0) {
+          weights.forEach(num => timeLinePercentages.push(+num / sumOfWeights));
+        } else {
+          weights.forEach(num => timeLinePercentages.push(1 / weights.length));
+        }
         return timeLinePercentages;
       }
     }
