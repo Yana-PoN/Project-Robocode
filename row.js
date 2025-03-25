@@ -64,9 +64,6 @@ class Row {
 
 
   saveButtonClick() {
-    // if (this.inputName.value.trim()
-    //   && ((!this.inputAmountCheckbox.checked && this.inputPrice.value.trim() && this.inputQuantity.value.trim()) 
-    //     || (this.inputAmountCheckbox.checked && this.inputAmount.value.trim()))) {
 
     if (this.inputName.value.trim() === "") {
       this.setError(this.inputName, this.tdName);

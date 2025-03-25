@@ -105,6 +105,29 @@ function save() {
     const deposit = document.getElementById("exampleInputEmail1");
     const isSimpleReport = document.getElementById("exampleRadios1");
 
+    let isErrors = false;
+    if (numberOfPeriods.value.trim() === "" || +numberOfPeriods.value < 1) {
+        setError(numberOfPeriods);
+        isErrors = true;
+    }
+
+    numberOfPeriods.addEventListener("keydown", function (event) {
+        event.currentTarget.className = "form-control";
+      });
+
+    if (deposit.value.trim() === "" || +deposit.value < 0) {
+        setError(deposit);
+        isErrors = true;
+    }
+
+    deposit.addEventListener("keydown", function (event) {
+        event.currentTarget.className = "form-control";
+      });
+
+    if (isErrors) {
+        return;
+    }
+
     localStorage.setItem("settings", JSON.stringify({
         income: checkIncome.checked,
         consumption: checkConsumption.checked,
@@ -115,6 +138,11 @@ function save() {
     }));
 
     updateVisibility();
+}
+
+function setError(input) {
+    input.className = "form-control is-invalid";
+    input.required = true;
 }
 
 function loadSettings() {
@@ -211,36 +239,36 @@ function calculation() {
         const plans = document.getElementById("plans");
         plans.hidden = false;
 
-      const incomeLabels = calculation.incomeItemsA.map(function (item) {
+        const incomeLabels = calculation.incomeItemsA.map(function (item) {
             return item.name;
         });
 
-      const incomeAmounts = calculation.incomeItemsA.map(function (item) {
+        const incomeAmounts = calculation.incomeItemsA.map(function (item) {
             return item.amount;
         });
 
-      const consumptionLabels = calculation.consumptionItemsA.map(function (item) {
+        const consumptionLabels = calculation.consumptionItemsA.map(function (item) {
             return item.name;
         });
 
-      const consumptionAmounts = calculation.consumptionItemsA.map(function (item) {
+        const consumptionAmounts = calculation.consumptionItemsA.map(function (item) {
             return item.amount;
         });
 
 
-      const incomeLabelsB = calculation.incomeItemsB.map(function (item) {
+        const incomeLabelsB = calculation.incomeItemsB.map(function (item) {
             return item.name;
         });
 
-      const incomeAmountsB = calculation.incomeItemsB.map(function (item) {
+        const incomeAmountsB = calculation.incomeItemsB.map(function (item) {
             return item.amount;
         });
 
-      const consumptionLabelsB = calculation.consumptionItemsB.map(function (item) {
+        const consumptionLabelsB = calculation.consumptionItemsB.map(function (item) {
             return item.name;
         });
 
-      const consumptionAmountsB = calculation.consumptionItemsB.map(function (item) {
+        const consumptionAmountsB = calculation.consumptionItemsB.map(function (item) {
             return item.amount;
         });
 
@@ -256,26 +284,26 @@ function calculation() {
         const planAText = document.getElementById("planAText");
 
 
-    if (checkComparison.checked) {
+        if (checkComparison.checked) {
             if (checkIncome.checked) {
                 this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
                 this.pieIncomeB = createPie("incomePieB", incomeLabelsB, incomeAmountsB, "Дохід");
-                planBText.hidden = false; 
+                planBText.hidden = false;
                 planAText.hidden = false;
             }
 
             if (checkConsumption.checked) {
                 this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
                 this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати");
-                planBText.hidden = false; 
-                planAText.hidden = false; 
+                planBText.hidden = false;
+                planAText.hidden = false;
             }
         } else {
             this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
             this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
-            planBText.hidden = true; 
-            planAText.hidden = true; 
-        }  
+            planBText.hidden = true;
+            planAText.hidden = true;
+        }
     }, 100);
 }
 
