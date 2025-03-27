@@ -1,82 +1,95 @@
 class Table {
-    
-    tbody;
-    rows = [];
 
-    constructor(name, tableBody) {
-      this.name = name;
-      this.tbody = tableBody;
+  tbody;
+  rows = [];
+
+  constructor(name, tableBody, removeButton, copyPlanAButton) {
+    this.name = name;
+    this.tbody = tableBody;
+    this.removeButton = removeButton;
+    this.copyPlanAButton = copyPlanAButton;
+  }
+
+  add() {
+    let row = new Row(this.tbody, this);
+    this.rows.push(row);
+
+    const checkIncome = document.getElementById("flexSwitchCheckIncome");
+    if (checkIncome) {
+      checkIncome.checked = true;
     }
 
-    add() {
-      let row = new Row(this.tbody, this);
-      this.rows.push(row);
-
-      const checkIncome = document.getElementById("flexSwitchCheckIncome"); 
-      if (checkIncome) {
-          checkIncome.checked = true;
-      }
-
-      const checkConsumption = document.getElementById("flexSwitchCheckConsumption"); 
-      if (checkConsumption) {
-        checkConsumption.checked = true;
-      }
-
-      const checkIncomeB = document.getElementById("flexSwitchCheckIncomeB"); 
-      if (checkIncomeB) {
-        checkIncomeB.checked = true;
-      }
-
-      const checkConsumptionB = document.getElementById("flexSwitchCheckConsumptionB"); 
-      if (checkConsumptionB) {
-        checkConsumptionB.checked = true;
-      }
+    const checkConsumption = document.getElementById("flexSwitchCheckConsumption");
+    if (checkConsumption) {
+      checkConsumption.checked = true;
     }
 
-     saveData() {
-        localStorage.setItem(this.name, JSON.stringify(this.getData()));
+    const checkIncomeB = document.getElementById("flexSwitchCheckIncomeB");
+    if (checkIncomeB) {
+      checkIncomeB.checked = true;
     }
 
-    fillData() {
-        let store = localStorage.getItem(this.name);
-        console.log(store);
-        if (store) {
-        let data = JSON.parse(store);
-        for (let item of data) {
-          let row = new Row(this.tbody, this);
-          row.name = item.name;
-          row.price = item.price;
-          row.quantity = item.quantity;
-          row.amount = item.amount;
-          row.isShowAmountInput = item.isAmount;
-          row.timeLineName = item.timeline;
-          row.setInputsState(false); 
-          this.rows.push(row);
-      }
+    const checkConsumptionB = document.getElementById("flexSwitchCheckConsumptionB");
+    if (checkConsumptionB) {
+      checkConsumptionB.checked = true;
     }
   }
 
-    getData() {
-      let result = [];
-      // this.rows.map();
-      for (let row of this.rows) {
-        if (row.status === "Active") {
-          result.push(
-            {
-              name: row.name,
-              isAmount: row.isShowAmountInput,
-              price: row.price,
-              quantity: row.quantity,
-              amount: row.amount,
-              timeline: row.timeLineName
-            });
-        }
+  saveData() {
+    let data = this.getData();
+    localStorage.setItem(this.name, JSON.stringify(data));
+
+    this.removeButton.disabled = data.length === 0;
+  }
+
+  fillData(data) {
+    if (!data) {
+      let store = localStorage.getItem(this.name);
+      console.log(store);
+      if (store) {
+        data = JSON.parse(store);
+      } else {
+        return;
       }
-
-      return result;
     }
 
-    remove() {
-      localStorage.setItem(this.name);
+    for (let item of data) {
+      let row = new Row(this.tbody, this);
+      row.name = item.name;
+      row.price = item.price;
+      row.quantity = item.quantity;
+      row.amount = item.amount;
+      row.isShowAmountInput = item.isAmount;
+      row.timeLineName = item.timeline;
+      row.setInputsState(false);
+      this.rows.push(row);
     }
+
+    this.removeButton.disabled = data.length === 0;
+     
+  }
+
+  getData() {
+    let result = [];
+    // this.rows.map();
+    for (let row of this.rows) {
+      if (row.status === "Active") {
+        result.push(
+          {
+            name: row.name,
+            isAmount: row.isShowAmountInput,
+            price: row.price,
+            quantity: row.quantity,
+            amount: row.amount,
+            timeline: row.timeLineName
+          });
+      }
+    }
+
+    return result;
+  }
+
+  remove() {
+    localStorage.setItem(this.name);
+  }
 }

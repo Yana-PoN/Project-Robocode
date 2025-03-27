@@ -59,7 +59,7 @@ function createPie(id, labels, amounts, title) {
             labels: labels,
             datasets: [
             {
-                label: 'Dataset 1',
+                label: 'Всього',
                 data: amounts,
                 backgroundColor: labels.map(getRandomColor),
             }
@@ -79,6 +79,50 @@ function createPie(id, labels, amounts, title) {
               display: true,
               text: title
             }
+          }
+        },
+    };
+
+    new Chart(pie, config);
+    return canvas;
+}
+
+function createDiagram(id, labels, amounts, title) {
+    const div = document.createElement("div");
+    div.className = "canvas-size";
+    const canvas = document.createElement("canvas");
+    canvas.id = id;
+    div.appendChild(canvas)
+    canvasWrapper.append(div);
+    const pie = document.getElementById(id);
+
+    const data = {
+            labels: labels,
+            datasets: [
+            {
+                label: 'Баланс',
+                data: amounts,
+                backgroundColor: labels.map(getRandomColor),
+                fill: false
+            }
+            ]
+        };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+          plugins: {
+            filler: {
+              propagate: false,
+            },
+            title: {
+              display: true,
+              text: title
+            }
+          },
+          interaction: {
+            intersect: false,
           }
         },
     };

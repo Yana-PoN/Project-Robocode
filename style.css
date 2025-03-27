@@ -12,11 +12,6 @@ table {
   flex-grow: 1;
 }
 
-.checkboxAddText {
-  display: flex;
-  justify-content: space-between;
-}
-
 th, td {
   padding: 10px;
   text-align: center;
@@ -59,17 +54,12 @@ td {
 
 .incomeText {
   color: blue;
+  text-align: center;
 }
 
 .consumptionText {
   color: blue;
-}
-
-.checkboxAddText {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 175px;
+  text-align: center;
 }
 
 .bi {
@@ -127,12 +117,6 @@ td {
 
 .table3 {
   margin-top: 10px;
-}
-
-.deleteCopy {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
 }
 
 .plan {
@@ -215,3 +199,13 @@ td {
     width: 100%;
   }
 
+.checkboxAddTextB {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+.addConsB {
+  display: flex;
+  justify-content: end;
+}  

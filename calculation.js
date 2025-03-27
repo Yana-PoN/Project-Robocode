@@ -21,6 +21,8 @@ class Calculation {
   consumptionItemsA = [];
   incomeItemsB = [];
   consumptionItemsB = [];
+  diagramItemsA = [];
+  diagramItemsB = [];
 
   isSimpleReport = false;
   isBlockCreateRow = false;

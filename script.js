@@ -9,10 +9,27 @@ const tbodyConsB = document.getElementById("tableRowsConsB");
 const tbody = document.getElementById("tbody");
 
 let table = new TableTimeLines('table', tbody);
-let tableIncomeA = new Table('income', tbodyInc);
-let tableConsumptionA = new Table('consumption', tbodyCons);
-let tableIncomeB = new Table('incomePlanB', tbodyIncB);
-let tableConsumptionB = new Table('consumptionPlanB', tbodyConsB);
+
+const deleteIncA = document.getElementById("deleteInc");
+const deleteConsA = document.getElementById("deleteCons");
+const deleteIncB = document.getElementById("deleteIncB");
+const deleteConsB = document.getElementById("deleteConsB");
+
+let tableIncomeA = new Table('income', tbodyInc, deleteIncA);
+let tableConsumptionA = new Table('consumption', tbodyCons, deleteConsA);
+let tableIncomeB = new Table('incomePlanB', tbodyIncB, deleteIncB);
+let tableConsumptionB = new Table('consumptionPlanB', tbodyConsB, deleteConsB);
+
+const checkIncome = document.getElementById("flexCheckIncome");
+const checkConsumption = document.getElementById("flexCheckConsumption");
+
+checkIncome.addEventListener("change", () => {
+    checkConsumption.disabled = !checkIncome.checked;
+  });
+
+checkConsumption.addEventListener("change", () => {
+    checkIncome.disabled = !checkConsumption.checked;
+  });
 
 function add() {
     table.add();
@@ -87,10 +104,24 @@ function deleteConsumptionB() {
 
     if (tbodyConsumptionB) {
         tbodyConsumptionB.replaceChildren("");
-    }
+    } 
 
     localStorage.removeItem("consumptionPlanB");
     tbodyConsumptionB.rows = [];
+}
+
+function copyPlanAIncome() {
+    deleteIncomeB();
+    const data = tableIncomeA.getData();
+    tableIncomeB.fillData(data);
+    tableIncomeB.saveData();
+}
+
+function copyPlanAConsumption() {
+    deleteConsumptionB();
+    const data = tableConsumptionA.getData();
+    tableConsumptionB.fillData(data);
+    tableConsumptionB.saveData();
 }
 
 
@@ -168,11 +199,27 @@ function updateVisibility() {
     const checkConsumption = document.getElementById("flexCheckConsumption");
     const flexCheckComparison = document.getElementById("flexCheckComparison");
 
-    document.getElementById("tableIncomeA").style.display = checkIncome.checked ? "table-row-group" : "none";
-    document.getElementById("tableIncomeB").style.display = checkIncome.checked ? "table-row-group" : "none";
-    document.getElementById("tableConsumptionA").style.display = checkConsumption.checked ? "table-row-group" : "none";
-    document.getElementById("tableConsumptionB").style.display = checkConsumption.checked ? "table-row-group" : "none";
-    document.getElementById("planB").style.display = flexCheckComparison.checked ? "block" : "none";
+    if (checkIncome.checked) {
+        document.getElementById("tableIncomeA").style.display = "table-row-group";
+        document.getElementById("tableIncomeB").style.display = "table-row-group";
+    } else {
+        document.getElementById("tableIncomeA").style.display = "none";
+        document.getElementById("tableIncomeB").style.display = "none";
+    }
+    
+    if (checkConsumption.checked) {
+        document.getElementById("tableConsumptionA").style.display = "table-row-group";
+        document.getElementById("tableConsumptionB").style.display = "table-row-group";
+    } else {
+        document.getElementById("tableConsumptionA").style.display = "none";
+        document.getElementById("tableConsumptionB").style.display = "none";
+    }
+    
+    if (flexCheckComparison.checked) {
+        document.getElementById("planB").style.display = "block";
+    } else {
+        document.getElementById("planB").style.display = "none";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", loadSettings);
@@ -258,11 +305,28 @@ function calculation() {
             return item.amount;
         });
 
+
         const consumptionLabelsB = calculation.consumptionItemsB.map(function (item) {
             return item.name;
         });
 
         const consumptionAmountsB = calculation.consumptionItemsB.map(function (item) {
+            return item.amount;
+        });
+
+        const diagramLabelsA = calculation.diagramItemsA.map(function (item) {
+            return item.name;
+        });
+
+        const diagramAmountsA = calculation.diagramItemsA.map(function (item) {
+            return item.amount;
+        });
+
+        const diagramLabelsB = calculation.diagramItemsB.map(function (item) {
+            return item.name;
+        });
+
+        const diagramAmountsB = calculation.diagramItemsB.map(function (item) {
             return item.amount;
         });
 
@@ -289,6 +353,11 @@ function calculation() {
             this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
             this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
         }
+
+        this.diagramA = createDiagram("diagramA", Array.from({length: calculation.periodsCount}, (_, i) => "P" + (i + 1)), calculation.balanceValuesA, "Баланс план А");
+        this.diagramB = createDiagram("diagramB", Array.from({length: calculation.periodsCount}, (_, i) => "P" + (i + 1)), calculation.balanceValuesB, "Баланс план Б");
+
+
     }, 100);
 }
 

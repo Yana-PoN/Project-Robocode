@@ -11,16 +11,23 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-primary shadow-lg bg-body-rounded navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand text-white" href="index.html">Розрахунок</a>
+      <a class="navbar-brand text-white fw-bold" href="index.html">Розрахунок</a>
       <button class="navbar-toggler border border-2 border-white border-opacity-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Лінії часу</button>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">База знань</a>
+          </li>
         </ul>
-        <button type="button" class="buttonIcons btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSettings">
+        <button type="button" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+          <i class="bi bi-graph-up"></i>
+          <h5 class="mb-0">Лінії часу</h5>
+        </button>
+        <button type="button" class="buttonIcons btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#exampleModalSettings">
           <i class="bi bi-gear ms-auto"></i>
+          <h5 class="mb-0">Налаштування</h5>
         </button>
       </div>
     </div>
@@ -145,15 +152,18 @@
 
   <div class="tables" id="tables">
     <div class="tableIncomeBody" id="tableIncomeA">
+
+      <h3 class="incomeText">Дохід</h3>
+
       <div class="checkboxAddText d-flex align-items-center">
 
-        <button type="button" class="btn btn-primary delete" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteInc" id="deleteInc">Видалити</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteInc" id="deleteInc">Видалити все</button>
 
         <div class="modal fade" id="exampleModalDeleteInc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити все</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -167,7 +177,7 @@
           </div>
         </div>
 
-        <h3 class="incomeText">Дохід</h3>
+
         <div class="p-2">
           <button type="button" class="btn btn-primary add" onclick="addIncome()" id="addInc">Додати+</button>
         </div>
@@ -192,15 +202,18 @@
 
 
     <div class="tableConsumptionBody" id="tableConsumptionA">
+
+      <h3 class="consumptionText">Витрати</h3>
+
       <div class="checkboxAddText d-flex align-items-center">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" id="deleteCons">Видалити</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" id="deleteCons">Видалити все</button>
 
         <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити все</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -214,7 +227,7 @@
           </div>
         </div>
 
-        <h3 class="consumptionText">Витрати</h3>
+
         <div class="p-2">
           <button type="button" class="btn btn-primary" onclick="addConsumption()" id="addCons">Додати+</button>
         </div>
@@ -246,15 +259,19 @@
 
     <div class="tables" id="tables">
       <div class="tableIncomeBody" id="tableIncomeB">
-        <div class="checkboxAddText d-flex align-items-center">
+        
+        <h3 class="incomeText flex-grow-1">Дохід</h3>
 
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteIncB" id="deleteIncB">Видалити</button>
+        <div class="checkboxAddTextB d-flex align-items-center">
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteIncB" id="deleteIncB">Видалити все</button>
+          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#exampleModalCopyPlanA1" id="copyPlanIncome">Копіювати із Плану А</button>
 
           <div class="modal fade" id="exampleModalDeleteIncB" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel1">Видалити</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel1">Видалити все</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -268,8 +285,27 @@
             </div>
           </div>
 
-          <h3 class="incomeText">Дохід</h3>
-          <div class="p-2">
+
+          <div class="modal fade" id="exampleModalCopyPlanA1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Копіювати із Плану А</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Ви впевнені?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="copyPlanAIncome()">Так</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      
+          <div class="p-2 ms-auto">
             <button type="button" class="btn btn-primary" onclick="addIncomeB()" id="addIncB">Додати+</button>
           </div>
         </div>
@@ -292,15 +328,19 @@
       </div>
 
       <div class="tableConsumptionBody" id="tableConsumptionB">
-        <div class="checkboxAddText d-flex align-items-center">
 
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteB" id="deleteConsB">Видалити</button>
+        <h3 class="consumptionText flex-grow-1">Витрати</h3>
+        
+        <div class="checkboxAddTextB d-flex align-items-center">
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteB" id="deleteConsB">Видалити все</button>
+          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#exampleModalCopyPlanA" id="copyPlanConsumption">Копіювати із Плану А</button>
 
           <div class="modal fade" id="exampleModalDeleteB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Видалити все</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -314,8 +354,27 @@
             </div>
           </div>
 
-          <h3 class="consumptionText">Витрати</h3>
-          <div class="p-2">
+
+          <div class="modal fade" id="exampleModalCopyPlanA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Копіювати із Плану А</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Ви впевнені?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="copyPlanAConsumption()">Так</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="p-2 ms-auto">
             <button type="button" class="btn btn-primary" onclick="addConsumptionB()" id="addConsB">Додати+</button>
           </div>
         </div>
@@ -368,8 +427,9 @@
   <script src="table.js"></script>
   <script src="script.js"></script>
   <script src="calculation.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="chart.js"></script>
+  <script src="diagram.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
