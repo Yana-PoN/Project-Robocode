@@ -67,6 +67,7 @@ class Row {
 
     if (this.inputName.value.trim() === "") {
       this.setError(this.inputName, this.tdName);
+      return;
     }
 
     if (!this.inputAmountCheckbox.checked && (this.inputPrice.value.trim() === "" || +this.inputPrice.value < 0)) {
@@ -138,6 +139,10 @@ class Row {
       this.inputName.placeholder = "Введіть ім'я";
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
+
+      this.inputName.addEventListener("input", () => {
+        this.inputName.value = this.inputName.value.replace(/^\s+/,"");
+      });      
 
       this.inputName.addEventListener("keydown", function (event) {
         event.currentTarget.className = "form-control";

@@ -99,20 +99,24 @@ td {
   cursor: pointer;
 }
 
-.modal-lg {
-  max-width: 90%;
+.modalBase {
+  color: #333;
 }
 
-.canvas-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  text-align: center;
-  justify-content: space-between;
+.highlight {
+  color: #d35400;
+  font-weight: bold;
 }
 
-.canvas-size {
-  width: 400px;
-  height: 400px;
+.ulBase {
+  padding-left: 20px;
+}
+
+.exampleBase {
+  background: #e8f6ff;
+  padding: 10px;
+  border-left: 4px solid #007acc;
+  margin: 10px 0;
 }
 
 .table3 {
@@ -209,3 +213,36 @@ td {
   display: flex;
   justify-content: end;
 }  
+
+#canvas-wrapper {
+  display: flex;
+  justify-content: center;  
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.canvas-size {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+}
+
+.centerdiagram {
+  display: flex;
+  justify-content: center; 
+  width: 100%;
+}
+
+.canvas-diagram {
+  max-width: 800px;
+  width: 100%;
+}
+
+.canvas-diagram canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1; 
+}

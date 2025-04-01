@@ -96,6 +96,7 @@ class RowTimeLines {
 
       if (this.inputName.value.trim() === "") {
         this.setError(this.inputName, this.tdName);
+        return;
       } 
     
       if (this.inputNumberOfPeriods.value.trim() === "") {
@@ -142,6 +143,10 @@ class RowTimeLines {
       this.inputName.placeholder = "Введіть ім'я";
       this.inputName.value = this.name;
       this.tdName.appendChild(this.inputName);
+
+      this.inputName.addEventListener("input", () => {
+        this.inputName.value = this.inputName.value.replace(/^\s+/,"");
+      });      
 
       this.inputName.addEventListener("keydown", function(event) {
         event.currentTarget.className = "form-control";

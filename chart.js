@@ -87,24 +87,29 @@ function createPie(id, labels, amounts, title) {
     return canvas;
 }
 
-function createDiagram(id, labels, amounts, title) {
-    const div = document.createElement("div");
-    div.className = "canvas-size";
+function createDiagram(id, labels, amountsA, amountsB, title) {
+    const div = document.getElementById("divDiagram");
     const canvas = document.createElement("canvas");
     canvas.id = id;
-    div.appendChild(canvas)
-    canvasWrapper.append(div);
+    div.appendChild(canvas);
+
     const pie = document.getElementById(id);
 
     const data = {
             labels: labels,
             datasets: [
             {
-                label: 'Баланс',
-                data: amounts,
-                backgroundColor: labels.map(getRandomColor),
-                fill: false
-            }
+              label: "Баланс план А",
+              data: amountsA,
+              backgroundColor: labels.map(getRandomColor),
+              fill: false
+          },
+          {
+              label: "Баланс план Б",
+              data: amountsB,
+              backgroundColor: labels.map(getRandomColor),
+              fill: false
+          }
             ]
         };
 
@@ -112,9 +117,10 @@ function createDiagram(id, labels, amounts, title) {
         type: 'line',
         data: data,
         options: {
+          maintainAspectRatio: false,
           plugins: {
             filler: {
-              propagate: false,
+              propagate: true,
             },
             title: {
               display: true,
@@ -122,7 +128,7 @@ function createDiagram(id, labels, amounts, title) {
             }
           },
           interaction: {
-            intersect: false,
+            intersect: true,
           }
         },
     };

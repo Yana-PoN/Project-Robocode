@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Розрахунок</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-primary shadow-lg bg-body-rounded navbar-dark">
     <div class="container-fluid">
       <a class="navbar-brand text-white fw-bold" href="index.html">Розрахунок</a>
-      <button class="navbar-toggler border border-2 border-white border-opacity-50" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler border border-2 border-white border-opacity-50" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">База знань</a>
+            <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal"
+              data-bs-target="#exampleModalKnowledgeBase">База знань</a>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+        <button type="button" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal"
+          data-bs-target="#exampleModal" data-bs-whatever="@mdo">
           <i class="bi bi-graph-up"></i>
           <h5 class="mb-0">Лінії часу</h5>
         </button>
-        <button type="button" class="buttonIcons btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#exampleModalSettings">
+        <button type="button" class="buttonIcons btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal"
+          data-bs-target="#exampleModalSettings">
           <i class="bi bi-gear ms-auto"></i>
           <h5 class="mb-0">Налаштування</h5>
         </button>
@@ -34,7 +42,63 @@
   </nav>
 
 
-  <div class="modal fade" id="exampleModalSettings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade baseModal" id="exampleModalKnowledgeBase" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">База знань</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <h1 class="modalBase">Планувальник бюджету</h1>
+          <p>Ця програма допоможе вам створювати, аналізувати та порівнювати бюджети, обираючи найкращий фінансовий
+            план.</p>
+
+          <h2 class="modalBase">Основні можливості</h2>
+          <ul class="ulBase">
+            <li>Створення та порівняння альтернативних бюджетів.</li>
+            <li>Розрахунок доходів і витрат за один або кілька періодів.</li>
+            <li>Графічне відображення доходів/витрат у вигляді кругової діаграми.</li>
+            <li>Порівняння балансів двох планів по періодах.</li>
+          </ul>
+
+          <h2 class="modalBase">Визначення термінів</h2>
+          <p><span class="highlight">Період</span> – умовний відрізок часу, який користувач визначає сам (місяць,
+            тиждень, день).</p>
+          <p><span class="highlight">Лінія часу</span> – функціонал для розбивання суми грошей на періоди з можливістю
+            задавати вагу кожного періоду.</p>
+
+          <h2 class="modalBase">Приклади використання лінії часу</h2>
+          <div class="exampleBase">
+            <p><strong>Приклад 1:</strong> Оплата навчання раз на два місяці.</p>
+            <p>Період = місяць, ваги: <span class="highlight">1, 0</span>. Це означає, що в першому місяці потрібно
+              внести всю суму, а в другому – нічого.</p>
+          </div>
+
+          <div class="exampleBase">
+            <p><strong>Приклад 2:</strong> Погашення кредиту на 3 місяці (сума 3000 грн).</p>
+            <p>Встановлені ваги: <span class="highlight">1, 0, 2</span>.</p>
+            <p>Результат:</p>
+            <ul class="ulBase">
+              <li>1-й місяць – 1000 грн</li>
+              <li>2-й місяць – 0 грн</li>
+              <li>3-й місяць – 2000 грн</li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModalSettings" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dg">
 
       <div class="modal-content">
@@ -68,7 +132,8 @@
 
           <div class="mb-3">
             <label for="numberOfPeriods" class="form-label">Кількість періодів</label>
-            <input type="number" class="form-control" id="numberOfPeriods" aria-describedby="emailHelp" min="1" value="12" max="100">
+            <input type="number" class="form-control" id="numberOfPeriods" aria-describedby="emailHelp" min="1"
+              value="12" max="100">
           </div>
 
           <div class="form-check">
@@ -80,7 +145,8 @@
 
           <div class="mb-3" id="deposit">
             <div class="d-flex">
-              <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" min="0" value="0">
+              <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" min="0"
+                value="0">
               <span class="input-group-text">%</span>
             </div>
           </div>
@@ -92,7 +158,8 @@
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" checked>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"
+              checked>
             <label class="form-check-label" for="exampleRadios2">
               Розширений
             </label>
@@ -113,7 +180,8 @@
 
 
 
-  <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -157,9 +225,11 @@
 
       <div class="checkboxAddText d-flex align-items-center">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteInc" id="deleteInc">Видалити все</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteInc"
+          id="deleteInc">Видалити все</button>
 
-        <div class="modal fade" id="exampleModalDeleteInc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModalDeleteInc" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -171,7 +241,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckIncome" onclick="deleteIncome()">Так</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckIncome"
+                  onclick="deleteIncome()">Так</button>
               </div>
             </div>
           </div>
@@ -207,9 +278,11 @@
 
       <div class="checkboxAddText d-flex align-items-center">
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" id="deleteCons">Видалити все</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"
+          id="deleteCons">Видалити все</button>
 
-        <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -221,7 +294,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckConsumption" onclick="deleteConsumption()">Так</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckConsumption"
+                  onclick="deleteConsumption()">Так</button>
               </div>
             </div>
           </div>
@@ -259,15 +333,18 @@
 
     <div class="tables" id="tables">
       <div class="tableIncomeBody" id="tableIncomeB">
-        
+
         <h3 class="incomeText flex-grow-1">Дохід</h3>
 
         <div class="checkboxAddTextB d-flex align-items-center">
 
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteIncB" id="deleteIncB">Видалити все</button>
-          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#exampleModalCopyPlanA1" id="copyPlanIncome">Копіювати із Плану А</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteIncB"
+            id="deleteIncB">Видалити все</button>
+          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModalCopyPlanA1" id="copyPlanIncome">Копіювати із Плану А</button>
 
-          <div class="modal fade" id="exampleModalDeleteIncB" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+          <div class="modal fade" id="exampleModalDeleteIncB" tabindex="-1" aria-labelledby="exampleModalLabel1"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -279,14 +356,16 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckIncomeB" onclick="deleteIncomeB()">Так</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckIncomeB"
+                    onclick="deleteIncomeB()">Так</button>
                 </div>
               </div>
             </div>
           </div>
 
 
-          <div class="modal fade" id="exampleModalCopyPlanA1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModalCopyPlanA1" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -298,13 +377,14 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="copyPlanAIncome()">Так</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    onclick="copyPlanAIncome()">Так</button>
                 </div>
               </div>
             </div>
           </div>
 
-      
+
           <div class="p-2 ms-auto">
             <button type="button" class="btn btn-primary" onclick="addIncomeB()" id="addIncB">Додати+</button>
           </div>
@@ -330,13 +410,16 @@
       <div class="tableConsumptionBody" id="tableConsumptionB">
 
         <h3 class="consumptionText flex-grow-1">Витрати</h3>
-        
+
         <div class="checkboxAddTextB d-flex align-items-center">
 
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteB" id="deleteConsB">Видалити все</button>
-          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#exampleModalCopyPlanA" id="copyPlanConsumption">Копіювати із Плану А</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDeleteB"
+            id="deleteConsB">Видалити все</button>
+          <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModalCopyPlanA" id="copyPlanConsumption">Копіювати із Плану А</button>
 
-          <div class="modal fade" id="exampleModalDeleteB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModalDeleteB" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -348,14 +431,16 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckConsumptionB" onclick="deleteConsumptionB()">Так</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="flexSwitchCheckConsumptionB"
+                    onclick="deleteConsumptionB()">Так</button>
                 </div>
               </div>
             </div>
           </div>
 
 
-          <div class="modal fade" id="exampleModalCopyPlanA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModalCopyPlanA" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -367,13 +452,14 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="copyPlanAConsumption()">Так</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    onclick="copyPlanAConsumption()">Так</button>
                 </div>
               </div>
             </div>
           </div>
 
-          
+
           <div class="p-2 ms-auto">
             <button type="button" class="btn btn-primary" onclick="addConsumptionB()" id="addConsB">Додати+</button>
           </div>
@@ -402,7 +488,8 @@
     <button type="button" class="btn btn-primary" onclick="calculation()" id="calculation">Розрахунок</button>
   </div>
 
-  <div class="spinner" id="spinner" style="display: flex; justify-content: center; align-items: center; margin-top: 58px;">$</div>
+  <div class="spinner" id="spinner"
+    style="display: flex; justify-content: center; align-items: center; margin-top: 58px;">$</div>
 
 
 
@@ -419,6 +506,9 @@
   <div id="canvas-wrapper" class="canvas-wrapper">
     <div class="pies"></div>
   </div>
+  <div class="centerdiagram">
+    <div id="divDiagram" class="canvas-diagram"></div>
+  </div>
 
 
   <script src="row.js"></script>
@@ -428,8 +518,10 @@
   <script src="script.js"></script>
   <script src="calculation.js"></script>
   <script src="chart.js"></script>
-  <script src="diagram.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

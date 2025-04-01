@@ -349,14 +349,20 @@ function calculation() {
                 this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати план А");
                 this.pieConsumptionB = createPie("consumptionPieB", consumptionLabelsB, consumptionAmountsB, "Витрати план Б");
             }
+
+            this.diagram = createDiagram(
+                "diagram",
+                Array.from({ length: calculation.periodsCount }, (_, i) => "P" + (i + 1)),
+                calculation.balanceValuesA,
+                calculation.balanceValuesB,
+                "Баланс План А і План Б"
+            );
+            
         } else {
             this.pieIncome = createPie("incomePie", incomeLabels, incomeAmounts, "Дохід");
             this.pieConsumption = createPie("consumptionPie", consumptionLabels, consumptionAmounts, "Витрати");
         }
-
-        this.diagramA = createDiagram("diagramA", Array.from({length: calculation.periodsCount}, (_, i) => "P" + (i + 1)), calculation.balanceValuesA, "Баланс план А");
-        this.diagramB = createDiagram("diagramB", Array.from({length: calculation.periodsCount}, (_, i) => "P" + (i + 1)), calculation.balanceValuesB, "Баланс план Б");
-
+        
 
     }, 100);
 }
