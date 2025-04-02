@@ -57,12 +57,14 @@ class RowTimeLines {
   saveButtonClick() {
     let errorWeights = [];
     this.inputWeights.forEach(i => {
-      if (!i.value.trim()) {
+      if (!i.value.trim() || (+i.value.trim()) < 1) {
         errorWeights.push(i);
       }
     });
 
-    if (this.inputName.value.trim() && this.inputNumberOfPeriods.value.trim() && errorWeights.length === 0) {
+    if (this.inputName.value.trim() && this.inputNumberOfPeriods.value.trim() 
+      && (+this.inputNumberOfPeriods.value) > 0 
+      && errorWeights.length === 0) {
       if (this.name !== this.inputName.value && this.table.isExistName(this.inputName.value)) {
         const colDiv = document.createElement("div");
         colDiv.className = "col-md-6";
@@ -99,12 +101,14 @@ class RowTimeLines {
         return;
       } 
     
-      if (this.inputNumberOfPeriods.value.trim() === "") {
+      if (this.inputNumberOfPeriods.value.trim() === "" || this.inputNumberOfPeriods.value < 1) {
         this.setError(this.inputNumberOfPeriods, this.tdNumberOfPeriods);
+        return;
       } 
 
       if (errorWeights.length > 0) {
         errorWeights.forEach(i => this.setError(i, this.tdWeight));
+        return;
       }
     }
   }
@@ -174,7 +178,7 @@ class RowTimeLines {
           inputWeight.className = "form-control";
           inputWeight.type = "number";
           inputWeight.placeholder = "Введіть число";
-          inputWeight.min = 0;
+          inputWeight.min = 1;
           inputWeight.value = this.weights[i] || '';
 
           inputWeight.addEventListener("keydown", function (event) {
@@ -194,7 +198,7 @@ class RowTimeLines {
         inputWeight.className = "form-control";
         inputWeight.type = "number";
         inputWeight.placeholder = "Введіть число";
-        inputWeight.min = 0;
+        inputWeight.min = 1;
         inputWeight.value = this.weights[i] || '';
         this.inputWeights.push(inputWeight);
         this.tdWeight.appendChild(inputWeight);
