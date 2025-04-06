@@ -57,7 +57,7 @@ class RowTimeLines {
   saveButtonClick() {
     let errorWeights = [];
     this.inputWeights.forEach(i => {
-      if (!i.value.trim() || (+i.value.trim()) < 1) {
+      if (!i.value.trim() || (+i.value.trim()) < 0) {
         errorWeights.push(i);
       }
     });
@@ -178,7 +178,7 @@ class RowTimeLines {
           inputWeight.className = "form-control";
           inputWeight.type = "number";
           inputWeight.placeholder = "Введіть число";
-          inputWeight.min = 1;
+          inputWeight.min = 0;
           inputWeight.value = this.weights[i] || '';
 
           inputWeight.addEventListener("keydown", function (event) {
@@ -198,7 +198,7 @@ class RowTimeLines {
         inputWeight.className = "form-control";
         inputWeight.type = "number";
         inputWeight.placeholder = "Введіть число";
-        inputWeight.min = 1;
+        inputWeight.min = 0;
         inputWeight.value = this.weights[i] || '';
         this.inputWeights.push(inputWeight);
         this.tdWeight.appendChild(inputWeight);
@@ -226,7 +226,7 @@ class RowTimeLines {
         if (sumOfWeights !== 0) {
           this.weights.forEach(num => result.push(num + '(' + round(+num / sumOfWeights) * 100 + '%)'));
         } else {
-          this.weights.forEach(num => result.push(num + '(' + round(1 / weights.length) * 100 + '%)'));
+          this.weights.forEach(num => result.push(num + '(' + round(1 / this.weights.length) * 100 + '%)'));
         }
         return result;
     }
